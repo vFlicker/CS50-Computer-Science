@@ -4,47 +4,54 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define FIRST_UPPERCASE_LETTER 'A'
-#define FIRST_LOWERCASE_LETTER 'a'
-#define ALPHABET_LENGTH 26
+const char FIRST_UPPERCASE_LETTER = 'A';
+const char FIRST_LOWERCASE_LETTER = 'a';
+const int ALPHABET_LENGTH = 26;
 
-bool only_digits(string string);
+bool is_valid_argument(string argument);
 char rotate(char symbol, int key);
 
 int main(int argc, string argv[])
 {
-    // Сheck that the user entered a single argument
+    int key;
+
+    // Check that the user entered a single argument
     // and the every character in argv[1] is a digit
-    if (argc != 2 || only_digits(argv[1]) == false)
+    if (argc != 2 || is_valid_argument(argv[1]) == false)
     {
         printf("Usage: ./caesar key\n");
         return 1;
     }
-
-    // Convert argv[1] from a `string` to an `int`
-    int key = atoi(argv[1]);
+    else
+    {
+        // Convert argv[1] from a string to an int
+        key = atoi(argv[1]);
+    }
 
     // Prompt user for plaintext
     string plaintext = get_string("plaintext:  ");
 
+    // Print the beginning for output
     printf("ciphertext: ");
 
-    // For each character in the plaintext:
+    // For each character in the plaintext
     for (int i = 0, length = strlen(plaintext); i < length; i++)
     {
+        // Print “rotated” character
         printf("%c", rotate(plaintext[i], key));
     }
 
+    // Print newline
     printf("\n");
 
     return 0;
 }
 
-bool only_digits(string string)
+bool is_valid_argument(string argument)
 {
-    for (int i = 0, length = strlen(string); i < length; i++)
+    for (int i = 0, length = strlen(argument); i < length; i++)
     {
-        if (!isdigit(string[i]))
+        if (!isdigit(argument[i]))
         {
             return false;
         }
