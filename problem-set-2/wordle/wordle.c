@@ -118,6 +118,9 @@ int main(int argc, string argv[])
         printf("You lost. The target word was: %s\n", choice);
     }
 
+    // close file
+    fclose(wordlist);
+
     // that's all folks!
     return 0;
 }

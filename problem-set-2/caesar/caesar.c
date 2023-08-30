@@ -13,8 +13,6 @@ char rotate(char symbol, int key);
 
 int main(int argc, string argv[])
 {
-    int key;
-
     // Check that the user entered a single argument
     // and the every character in argv[1] is a digit
     if (argc != 2 || is_valid_argument(argv[1]) == false)
@@ -22,11 +20,8 @@ int main(int argc, string argv[])
         printf("Usage: ./caesar key\n");
         return 1;
     }
-    else
-    {
-        // Convert argv[1] from a string to an int
-        key = atoi(argv[1]);
-    }
+
+    int key = atoi(argv[1]);
 
     // Prompt user for plaintext
     string plaintext = get_string("plaintext:  ");

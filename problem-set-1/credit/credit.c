@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 long long get_card_number(void);
-bool validate_luhn_algorithm(long long card_number);
+bool is_valid_card_number(long long card_number);
 string check_card_type(long long card_number);
 
 int main()
@@ -10,13 +10,12 @@ int main()
     // Prompt for input
     long long card_number = get_card_number();
 
-    // Determine if a credit card number is (syntactically) valid
-    bool is_card_number_valid = validate_luhn_algorithm(card_number);
-
     // Check for card length and starting digits
     string card_type = check_card_type(card_number);
 
-    if (is_card_number_valid == false || card_type == NULL)
+    // Determine if a credit card number is (syntactically) valid
+    // and the card length and starting digits are correct
+    if (is_valid_card_number(card_number) == false || card_type == NULL)
     {
         printf("%s\n", "INVALID");
     }
@@ -48,7 +47,7 @@ long long get_card_number(void)
     4. Add the obtained numbers to the even digits.
     5. Take the remainder of the sum divided by 2; if it's 0, then the validation is successful.
 */
-bool validate_luhn_algorithm(long long card_number)
+bool is_valid_card_number(long long card_number)
 {
     int result = 0;
     int digit_position = 1;

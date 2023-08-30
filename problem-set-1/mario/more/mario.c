@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 int get_height(void);
-void printPyramids(int height, int width);
+void print_pyramids(int height, int width);
 void repeat(string symbol, int times);
 
 int main(void)
@@ -10,7 +10,7 @@ int main(void)
     int height = get_height();
     int width = height;
 
-    printPyramids(height, width);
+    print_pyramids(height, width);
 }
 
 int get_height(void)
@@ -26,7 +26,7 @@ int get_height(void)
     return height;
 }
 
-void printPyramids(int height, int width)
+void print_pyramids(int height, int width)
 {
     for (int i = 1; i <= height; i++)
     {

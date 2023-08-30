@@ -15,11 +15,11 @@ int main(void)
     for (int i = 0, length = strlen(message); i < length; i++)
     {
         int bits[BITS_IN_BYTE];
-        int n = message[i]; // Convert the character to its ASCII decimal value
+        int ascii_code = message[i]; // Convert the character to its ASCII decimal value
 
         for (int j = BITS_IN_BYTE - 1; j >= 0; j--)
         {
-            if (n > 0 && n % 2 == 1)
+            if (ascii_code > 0 && ascii_code % 2 == 1)
             {
                 bits[j] = 1;
             }
@@ -28,7 +28,7 @@ int main(void)
                 bits[j] = 0;
             }
 
-            n /= 2;
+            ascii_code /= 2;
         }
 
         for (int j = 0; j < BITS_IN_BYTE; j++)

@@ -76,10 +76,10 @@ int count_sentences(string text)
 
 int calculate_index(int letters, int words, int sentences)
 {
-    float L = (float) letters / words * 100;
-    float S = (float) sentences / words * 100;
+    float l = (float) letters / words * 100;
+    float s = (float) sentences / words * 100;
 
-    return round(0.0588 * L - 0.296 * S - 15.8);
+    return round(0.0588 * l - 0.296 * s - 15.8);
 }
 
 void print_grade(int index)
