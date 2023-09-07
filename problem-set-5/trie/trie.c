@@ -69,7 +69,6 @@ int main(int argc, char *argv[])
             int index = tolower(name[i]) - 'a';
             if (cursor->children[index] == NULL)
             {
-
                 // Make node
                 node *new = malloc(sizeof(node));
                 new->is_word = false;
@@ -128,7 +127,6 @@ bool check(char *word)
 // Unload trie from memory
 bool unload(void)
 {
-
     // The recursive function handles all of the freeing
     unloader(root);
 
@@ -137,7 +135,6 @@ bool unload(void)
 
 void unloader(node *current)
 {
-
     // Iterate over all the children to see if they point to anything and go
     // there if they do point
     for (int i = 0; i < SIZE_OF_ALPHABET; i++)
