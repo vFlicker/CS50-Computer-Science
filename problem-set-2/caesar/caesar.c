@@ -21,6 +21,7 @@ int main(int argc, string argv[])
         return 1;
     }
 
+    // Remember key
     int key = atoi(argv[1]);
 
     // Prompt user for plaintext

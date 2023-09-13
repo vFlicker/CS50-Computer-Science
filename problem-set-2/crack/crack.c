@@ -43,9 +43,9 @@ int main(int argc, string argv[])
             {
                 for (int second_char_index = 0; second_char_index < LETTERS_COUNT; second_char_index++)
                 {
-                    for (int first_letter_index = 0; first_letter_index < LETTERS_COUNT; first_letter_index++)
+                    for (int first_char_index = 0; first_char_index < LETTERS_COUNT; first_char_index++)
                     {
-                        password[0] = letters[first_letter_index];
+                        password[0] = letters[first_char_index];
                         password[1] = letters[second_char_index];
                         password[2] = letters[third_char_index];
                         password[3] = letters[fourth_char_index];

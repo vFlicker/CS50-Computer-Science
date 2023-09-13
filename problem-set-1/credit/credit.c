@@ -2,8 +2,8 @@
 #include <stdio.h>
 
 long long get_card_number(void);
-bool is_valid_card_number(long long card_number);
 string check_card_type(long long card_number);
+bool is_valid_card_number(long long card_number);
 
 int main()
 {
@@ -13,16 +13,8 @@ int main()
     // Check for card length and starting digits
     string card_type = check_card_type(card_number);
 
-    // Determine if a credit card number is (syntactically) valid
-    // and the card length and starting digits are correct
-    if (is_valid_card_number(card_number) == false || card_type == NULL)
-    {
-        printf("%s\n", "INVALID");
-    }
-    else
-    {
-        printf("%s\n", card_type);
-    }
+    // Print the card type
+    printf("%s\n", card_type);
 }
 
 long long get_card_number(void)
@@ -36,6 +28,51 @@ long long get_card_number(void)
     while (card_number < 0);
 
     return card_number;
+}
+
+/*
+    American Express: 15 digits, starts with 34 or 37.
+    MasterCard: 16 digits, starts with 51, 52, 53, 54 or 55.
+    Vise Express: 13 or 16 digits, starts with 4.
+*/
+string check_card_type(long long card_number)
+{
+    if (is_valid_card_number(card_number) == false)
+    {
+        return "INVALID";
+    }
+
+    int first_digit = 0;
+    int second_digit = 0;
+    int digit_count = 0;
+
+    while (card_number > 0)
+    {
+        second_digit = first_digit;
+        first_digit = card_number % 10;
+
+        card_number /= 10;
+        digit_count += 1;
+    }
+
+    int first_two_digits = (first_digit * 10) + second_digit;
+
+    if (digit_count == 15 && (first_two_digits == 34 || first_two_digits == 37))
+    {
+        return "AMEX";
+    }
+    else if (digit_count == 16 && first_two_digits >= 51 && first_two_digits <= 55)
+    {
+        return "MASTERCARD";
+    }
+    else if (digit_count >= 13 && digit_count <= 16 && first_digit == 4)
+    {
+        return "VISA";
+    }
+    else
+    {
+        return "INVALID";
+    }
 }
 
 /*
@@ -72,44 +109,4 @@ bool is_valid_card_number(long long card_number)
 
     // Check if the result is a multiple of 2
     return result % 10 == 0;
-}
-
-/*
-    American Express: 15 digits, starts with 34 or 37.
-    MasterCard: 16 digits, starts with 51, 52, 53, 54 or 55.
-    Vise Express: 13 or 16 digits, starts with 4.
-*/
-string check_card_type(long long card_number)
-{
-    int first_digit = 0;
-    int second_digit = first_digit;
-    int digit_count = 0;
-
-    while (card_number > 0)
-    {
-        second_digit = first_digit;
-        first_digit = card_number % 10;
-
-        card_number /= 10;
-        digit_count += 1;
-    }
-
-    int first_two_digits = (first_digit * 10) + second_digit;
-
-    if (digit_count == 15 && (first_two_digits == 34 || first_two_digits == 37))
-    {
-        return "AMEX";
-    }
-    else if (digit_count == 16 && first_two_digits >= 51 && first_two_digits <= 55)
-    {
-        return "MASTERCARD";
-    }
-    else if (digit_count >= 13 && digit_count <= 16 && first_digit == 4)
-    {
-        return "VISA";
-    }
-    else
-    {
-        return NULL;
-    }
 }
