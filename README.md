@@ -17,17 +17,17 @@ Throughout the course, you will work on problem sets inspired by various fields,
 ## Structure of This Repository
 
 Each problem set will have its own folder within this repository. In each folder, you will find my solutions, code files, and any related resources for that specific problem set.
-
+TT
 ## Contents
 
-Here's an overview of the folders and their corresponding problem sets:
+Here's an overview of the folders and their corresponding labs and problem sets:
 
-1. [Problem Set 1](problem-set-1/): C programming exercises, covering basic concepts like loops, conditions, and functions.
-2. [Problem Set 2](problem-set-2/): More C programming exercises, focusing on arrays and strings.
-3. [Problem Set 3](problem-set-3/): Learning more about algorithms and sorting algorithms.
-4. [Problem Set 4](problem-set-4/): Memory management and pointers in C.
-5. [Problem Set 5](problem-set-5/): Data structures.
-6. [Problem Set 6](problem-set-6/): Python programming exercises.
-7. [Problem Set 7](problem-set-7/): Introduction to SQL and databases.
-8. [Problem Set 8](problem-set-8/): Introduction to web development with HTML, CSS, and JavaScript.
-9. [Problem Set 9](problem-set-9/): Building Web Applications with Python, SQL, and Flask.
+1. [Week 1](week-1/): C programming exercises, covering basic concepts like loops, conditions, and functions.
+2. [Week 2](week-2/): More C programming exercises, focusing on arrays and strings.
+3. [Week 3](week-3/): Learning more about algorithms and sorting algorithms.
+4. [Week 4](week-4/): Memory management and pointers in C.
+5. [Week 5](week-5/): Data structures.
+6. [Week 6](week-6/): Python programming exercises.
+7. [Week 7](week-7/): Introduction to SQL and databases.
+8. [Week 8](week-8/): Introduction to web development with HTML, CSS, and JavaScript.
+9. [Week 9](week-9/): Building Web Applications with Python, SQL, and Flask.
