@@ -7,7 +7,7 @@ def main():
     db = SQL("sqlite:///roster.db")
 
     # Open the CSV file for reading
-    with open("students.csv") as file:
+    with open("students.csv", "r") as file:
         reader = csv.DictReader(file)
         for row in reader:
             # Extract data from the current row
