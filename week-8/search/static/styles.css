@@ -1,0 +1,23 @@
+body {
+    min-height: 100vh;
+}
+
+main {
+    display: flex;
+    flex-grow: 1;
+}
+
+.form-control-wrapper {
+    width: 100%;
+    max-width: 600px;
+}
+
+.advanced-input-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.advanced-input-wrapper input {
+    width: 400px;
+}
