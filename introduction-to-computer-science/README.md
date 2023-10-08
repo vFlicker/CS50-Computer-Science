@@ -1,4 +1,4 @@
-# CS50-Computer-Science
+# CS50’s Introduction to Computer Science
 
 This repository contains my solutions and projects for the problem sets from Harvard University's CS50 course. CS50 is an introduction to computer science and programming, suitable for both concentrators and non-concentrators, regardless of prior programming experience.
 
@@ -18,6 +18,7 @@ Throughout the course, you will work on problem sets inspired by various fields,
 
 Each problem set will have its own folder within this repository. In each folder, you will find my solutions, code files, and any related resources for that specific problem set.
 TT
+
 ## Contents
 
 Here's an overview of the folders and their corresponding labs and problem sets:
