@@ -13,6 +13,15 @@ h1 {
     padding-top: 20px;
 }
 
+.logo {
+    color: #000000;
+    text-decoration: none;
+}
+
+.logo:hover {
+    color: #000000;
+}
+
 .wrapper {
     display: flex;
 }
