@@ -1,0 +1,18 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block body %}
+    <div class="d-flex gap-2">
+        <a href="{% url 'encyclopedia:edit' title %}" class="btn btn-secondary">Edit</a>
+
+        <form action="{% url 'encyclopedia:delete' title %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+    </div>
+
+    {{ content | safe }}
+{% endblock %}
