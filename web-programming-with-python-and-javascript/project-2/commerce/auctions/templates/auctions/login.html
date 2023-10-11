@@ -2,20 +2,20 @@
 
 {% block body %}
     <main class="login container">
-        <form action="{% url 'login' %}" method="post" class="form form-register">
+        <form action="{% url 'login' %}" method="post" class="form form-login {% if form.errors %}form__item--invalid{% endif %}">
             <h2>Login</h2>
 
             {% csrf_token %}
 
-            <div class="form__item">
-                <label for="username">Username *</label>
-                <input id="username" type="text" name="username" placeholder="Username" autofocus />
-            </div>
-
-            <div class="form__item">
-                <label for="password">Password *</label>
-                <input id="password" type="password" name="password" placeholder="Password" />
-            </div>
+            {% for field in form %}
+                <div class="form__item">
+                    <label for="{{ field.id_for_label }}">
+                        {{ field.label }}{% if field.field.required %}*{% endif %}
+                    </label>
+                    {{ field }}
+                    {{ field.errors }}
+                </div>
+            {% endfor %}
 
             <button type="submit" class="button">Login</button>
 

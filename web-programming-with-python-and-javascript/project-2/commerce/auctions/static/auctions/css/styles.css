@@ -1056,33 +1056,15 @@ h2 {
 }
 
 
-.form__error {
-  display: none;
+.errorlist {
   margin-left: 3px;
   font-size: 12px;
   color: #e61b00;
 }
 
-.form__error-message {
-  display: none;
-  color: #e61b00;
-  margin-bottom: 10px;
-}
-
-.form--invalid .form__error-message {
-  display: block;
-}
 
 .form__error--bet {
   position: absolute;
-}
-
-input:invalid .form__error {
-  display: block;
-}
-
-.form__item--invalid .form__error {
-  display: block;
 }
 
 input::-webkit-outer-spin-button,
