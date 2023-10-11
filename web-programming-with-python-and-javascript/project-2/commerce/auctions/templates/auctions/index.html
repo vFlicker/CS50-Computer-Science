@@ -1,7 +1,212 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    <h2>Active Listings</h2>
+    <main class="container">
+        <section class="promo">
+            <h2 class="promo__title">Need staff for the skating rink?</h2>
+            <p class="promo__text">In our online auction you will find the most exclusive snowboard and ski equipment.</p>
+            <ul class="promo__list">
 
-    TODO
+                <li class="promo__item promo__item--boards">
+                    <a class="promo__link" href="/lots/category/boards">
+                        Boards
+                    </a>
+                </li>
+
+                <li class="promo__item promo__item--attachment">
+                    <a class="promo__link" href="/lots/category/attachment">
+                        Attachment
+                    </a>
+                </li>
+
+                <li class="promo__item promo__item--boots">
+                    <a class="promo__link" href="/lots/category/boots">
+                        Boots
+                    </a>
+                </li>
+
+                <li class="promo__item promo__item--clothing">
+                    <a class="promo__link" href="/lots/category/clothing">
+                        Clothing
+                    </a>
+                </li>
+
+                <li class="promo__item promo__item--tools">
+                    <a class="promo__link" href="/lots/category/tools">
+                        Tools
+                    </a>
+                </li>
+
+                <li class="promo__item promo__item--other">
+                    <a class="promo__link" href="/lots/category/other">
+                        Other
+                    </a>
+                </li>
+
+            </ul>
+        </section>
+        <section class="lots">
+            <div class="lots__header">
+                <h2>Open lots</h2>
+            </div>
+            <ul class="lots__list">
+
+                <li class="lot lots__item">
+                    <div class="lot__image">
+                        <a href="/lots/2">
+                            <img src="/img/lot-2.jpg" width="350" height="260" alt="DC Ply Mens 2016/2017 Snowboard">
+                        </a>
+                    </div>
+                    <div class="lot__info">
+                        <span class="lot__category">Boards</span>
+                        <h3 class="lot__title">
+                            <a class="text-link" href="/lots/2">
+                                DC Ply Mens 2016/2017 Snowboard
+                            </a>
+                        </h3>
+                        <div class="lot__state">
+                            <div class="lot__rate">
+                                <span class="lot__amount">Starting price</span>
+                                <span class="lot__cost">$1,59,999.00</span>
+                            </div>
+
+                            <div class="lot__timer timer  ">
+                                6096:09:41
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="lot lots__item">
+                    <div class="lot__image">
+                        <a href="/lots/1">
+                            <img src="/img/lot-1.jpg" width="350" height="260" alt="2014 Rossignol District Snowboard">
+                        </a>
+                    </div>
+                    <div class="lot__info">
+                        <span class="lot__category">Boards</span>
+                        <h3 class="lot__title">
+                            <a class="text-link" href="/lots/1">
+                                2014 Rossignol District Snowboard
+                            </a>
+                        </h3>
+                        <div class="lot__state">
+                            <div class="lot__rate">
+                                <span class="lot__amount">Starting price</span>
+                                <span class="lot__cost">$10,999.00</span>
+                            </div>
+
+                            <div class="lot__timer timer  ">
+                                6072:09:41
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="lot lots__item">
+                    <div class="lot__image">
+                        <a href="/lots/3">
+                            <img src="/img/lot-3.jpg" width="350" height="260" alt="Union Contact Pro Bindings 2015 L/XL">
+                        </a>
+                    </div>
+                    <div class="lot__info">
+                        <span class="lot__category">Attachment</span>
+                        <h3 class="lot__title">
+                            <a class="text-link" href="/lots/3">
+                                Union Contact Pro Bindings 2015 L/XL
+                            </a>
+                        </h3>
+                        <div class="lot__state">
+                            <div class="lot__rate">
+                                <span class="lot__amount">Starting price</span>
+                                <span class="lot__cost">$8,000.00</span>
+                            </div>
+
+                            <div class="lot__timer timer  ">
+                                6192:09:41
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="lot lots__item">
+                    <div class="lot__image">
+                        <a href="/lots/4">
+                            <img src="/img/lot-4.jpg" width="350" height="260" alt="DC Mutiny Charcoal Snowboard Boots">
+                        </a>
+                    </div>
+                    <div class="lot__info">
+                        <span class="lot__category">Boots</span>
+                        <h3 class="lot__title">
+                            <a class="text-link" href="/lots/4">
+                                DC Mutiny Charcoal Snowboard Boots
+                            </a>
+                        </h3>
+                        <div class="lot__state">
+                            <div class="lot__rate">
+                                <span class="lot__amount">Starting price</span>
+                                <span class="lot__cost">$10,999.00</span>
+                            </div>
+
+                            <div class="lot__timer timer  ">
+                                6144:09:41
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="lot lots__item">
+                    <div class="lot__image">
+                        <a href="/lots/5">
+                            <img src="/img/lot-5.jpg" width="350" height="260" alt="DC Mutiny Charcoal Snowboard Jacket">
+                        </a>
+                    </div>
+                    <div class="lot__info">
+                        <span class="lot__category">Clothing</span>
+                        <h3 class="lot__title">
+                            <a class="text-link" href="/lots/5">
+                                DC Mutiny Charcoal Snowboard Jacket
+                            </a>
+                        </h3>
+                        <div class="lot__state">
+                            <div class="lot__rate">
+                                <span class="lot__amount">Starting price</span>
+                                <span class="lot__cost">$7,500.00</span>
+                            </div>
+
+                            <div class="lot__timer timer  ">
+                                6240:09:41
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="lot lots__item">
+                    <div class="lot__image">
+                        <a href="/lots/6">
+                            <img src="/img/lot-6.jpg" width="350" height="260" alt="Oakley Canopy Goggles">
+                        </a>
+                    </div>
+                    <div class="lot__info">
+                        <span class="lot__category">Tools</span>
+                        <h3 class="lot__title">
+                            <a class="text-link" href="/lots/6">
+                                Oakley Canopy Goggles
+                            </a>
+                        </h3>
+                        <div class="lot__state">
+                            <div class="lot__rate">
+                                <span class="lot__amount">Starting price</span>
+                                <span class="lot__cost">$5,400.00</span>
+                            </div>
+
+                            <div class="lot__timer timer  ">
+                                6216:09:41
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </section>
+    </main>
 {% endblock %}
