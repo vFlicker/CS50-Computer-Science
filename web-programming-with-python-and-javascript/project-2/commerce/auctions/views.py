@@ -11,6 +11,18 @@ def index(request):
     return render(request, "auctions/index.html")
 
 
+def listing(request):
+    return render(request, "auctions/listing.html")
+
+
+def create_listing(request):
+    return render(request, "auctions/create_listing.html")
+
+
+def watchlist(request):
+    return render(request, "auctions/watchlist.html")
+
+
 def login_view(request):
     if request.method == "POST":
 

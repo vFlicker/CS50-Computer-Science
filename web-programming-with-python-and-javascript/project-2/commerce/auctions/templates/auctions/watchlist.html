@@ -1,0 +1,38 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <main class="container">
+        <section class="lots">
+            <h2>Watchlist</h2>
+            <ul class="lots__list">
+
+                <li class="lot lots__item">
+                    <div class="lot__image">
+                        <a href="/lots/2">
+                            <img src="/img/lot-2.jpg" width="350" height="260" alt="DC Ply Mens 2016/2017 Snowboard">
+                        </a>
+                    </div>
+                    <div class="lot__info">
+                        <span class="lot__category">Boards</span>
+                        <h3 class="lot__title">
+                            <a class="text-link" href="/lots/2">
+                                DC Ply Mens 2016/2017 Snowboard
+                            </a>
+                        </h3>
+                        <div class="lot__state">
+                            <div class="lot__rate">
+                                <span class="lot__amount">Starting price</span>
+                                <span class="lot__cost">$1,59,999.00</span>
+                            </div>
+
+                            <div class="lot__timer timer  ">
+                                6093:46:36
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+            </ul>
+        </section>
+    </main>
+{% endblock %}
