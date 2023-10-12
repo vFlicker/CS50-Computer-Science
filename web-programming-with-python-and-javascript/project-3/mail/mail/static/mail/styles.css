@@ -1,8 +1,10 @@
+/* Global */
 textarea {
     min-height: 400px;
 }
 
-.messages {
+/* Email preview list */
+.email-preview-list {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -12,14 +14,37 @@ textarea {
     gap: 3px;
 }
 
-.message {
+.email-preview-item {
     display: flex;
     justify-content: space-between;
 
     padding: 10px;
     border: 1px solid #000000;
+
+    cursor: pointer;
 }
 
-.message--read {
+.email-preview-item--read {
     background-color: #e5e5e5;
+}
+
+/* Email */
+.email {
+    padding: 10px;
+    background-color: #e5e5e5;
+}
+
+.email__subject {
+    margin-bottom: 20px;
+}
+
+.email__header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+.email__sender span,
+.email__recipients span {
+    font-weight: 500;
 }

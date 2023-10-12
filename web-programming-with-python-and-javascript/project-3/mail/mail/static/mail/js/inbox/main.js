@@ -1,7 +1,11 @@
 import * as API from './api.js';
-import { createMessageListView } from './views.js';
+import { createEmailPreviewListView, createEmailView } from './views.js';
+
+// Select all screens
+const screens = document.querySelectorAll('[data-screen]');
 
 // Select the containers to be used later
+const emailContainer = document.querySelector('#email-view');
 const emailsContainer = document.querySelector('#emails-view');
 const composeContainer = document.querySelector('#compose-view');
 
@@ -18,10 +22,16 @@ const composeBody = composeForm.querySelector('#compose-body');
 // Select action buttons
 const actionButtons = document.querySelectorAll('[data-action]')
 
+
+const setActiveScreen = (name) => {
+    for (const screen of screens) {
+        if (screen.dataset.screen === name) screen.style.display = 'block';
+        else screen.style.display = 'none';
+    }
+};
+
 const showComposeEmail = () => {
-    // Show compose view and hide other views
-    emailsContainer.style.display = 'none';
-    composeContainer.style.display = 'block';
+    setActiveScreen('compose');
 
     // Clear out composition fields
     composeRecipients.value = '';
@@ -29,18 +39,25 @@ const showComposeEmail = () => {
     composeBody.value = '';
 };
 
+const showEmail = async (id) => {
+    setActiveScreen('email');
+
+    // Render email
+    const email = await API.loadEmail(id);
+    const emailView = createEmailView(email);
+    emailContainer.replaceChildren(emailView);
+};
+
 const showMailbox = async (title, action) => {
-    // Show the mailbox and hide other views
-    emailsContainer.style.display = 'block';
-    composeContainer.style.display = 'none';
+    setActiveScreen('emails');
 
     // Show the mailbox name
     emailScreenTitle.textContent = title;
 
-    // Render messages
-    const emails = await API.loadMailbox(action);
-    const messageList = createMessageListView(emails);
-    emailScreenList.innerHTML = messageList;
+    // Render email previews
+    const emails = await API.loadEmails(action);
+    const emailPreviewListView = createEmailPreviewListView(emails, showEmail);
+    emailScreenList.replaceChildren(...emailPreviewListView);
 };
 
 
