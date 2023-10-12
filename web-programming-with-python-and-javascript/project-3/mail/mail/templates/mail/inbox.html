@@ -4,17 +4,21 @@
 {% block body %}
     <h2>{{ request.user.email }}</h2>
 
-    <div class="d-flex gap-1">
-        <button class="btn btn-sm btn-outline-primary" id="inbox">Inbox</button>
-        <button class="btn btn-sm btn-outline-primary" id="compose">Compose</button>
-        <button class="btn btn-sm btn-outline-primary" id="sent">Sent</button>
-        <button class="btn btn-sm btn-outline-primary" id="archived">Archived</button>
+    <div class="d-flex gap-1 justify-content-between">
+        <div>
+            <button class="btn btn-sm btn-outline-primary" data-action="inbox">Inbox</button>
+            <button class="btn btn-sm btn-outline-primary" data-action="compose">Compose</button>
+            <button class="btn btn-sm btn-outline-primary" data-action="sent">Sent</button>
+            <button class="btn btn-sm btn-outline-primary" data-action="archive">Archived</button>
+        </div>
 
-        <a class="btn btn-sm btn-outline-danger ml-auto" href="{% url 'logout' %}">Log Out</a>
+        <a class="btn btn-sm btn-outline-danger" href="{% url 'logout' %}">Log Out</a>
     </div>
     <hr>
 
     <div id="emails-view">
+        <h3></h3>
+        <ul class="messages"></ul>
     </div>
 
     <div id="compose-view">
@@ -36,5 +40,5 @@
 {% endblock %}
 
 {% block script %}
-    <script src="{% static 'mail/inbox.js' %}"></script>
+    <script src="{% static 'mail/js/inbox/main.js' %}" type="module"></script>
 {% endblock %}
