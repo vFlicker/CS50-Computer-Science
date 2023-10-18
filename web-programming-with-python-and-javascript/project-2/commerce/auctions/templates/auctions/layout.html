@@ -66,43 +66,14 @@
     <footer class="main-footer">
         <nav class="nav">
             <ul class="nav__list container">
-
-                <li class="nav__item">
-                    <a href="/lots/category/boards">
-                        Boards
-                    </a>
-                </li>
-
-                <li class="nav__item">
-                    <a href="/lots/category/attachment">
-                        Attachment
-                    </a>
-                </li>
-
-                <li class="nav__item">
-                    <a href="/lots/category/boots">
-                        Boots
-                    </a>
-                </li>
-
-                <li class="nav__item">
-                    <a href="/lots/category/clothing">
-                        Clothing
-                    </a>
-                </li>
-
-                <li class="nav__item">
-                    <a href="/lots/category/tools">
-                        Tools
-                    </a>
-                </li>
-
-                <li class="nav__item">
-                    <a href="/lots/category/other">
-                        Other
-                    </a>
-                </li>
-
+                {% for category in categories %}
+                    <li class="nav__item">
+                        {% comment %} TODO: url 'category' category.name {% endcomment %}
+                        <a href="{{ category.id }}">
+                            {{ category.name }}
+                        </a>
+                    </li>
+                {% endfor %}
             </ul>
         </nav>
         <div class="main-footer__bottom container">

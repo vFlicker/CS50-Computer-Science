@@ -1,4 +1,5 @@
 {% extends "auctions/layout.html" %}
+{% load auctions_extras %}
 
 {% block body %}
     <main class="container">
@@ -7,207 +8,46 @@
             <p class="promo__text">In our online auction you will find the most exclusive snowboard and ski equipment.</p>
             <ul class="promo__list">
 
-                <li class="promo__item promo__item--boards">
-                    <a class="promo__link" href="/lots/category/boards">
-                        Boards
-                    </a>
-                </li>
-
-                <li class="promo__item promo__item--attachment">
-                    <a class="promo__link" href="/lots/category/attachment">
-                        Attachment
-                    </a>
-                </li>
-
-                <li class="promo__item promo__item--boots">
-                    <a class="promo__link" href="/lots/category/boots">
-                        Boots
-                    </a>
-                </li>
-
-                <li class="promo__item promo__item--clothing">
-                    <a class="promo__link" href="/lots/category/clothing">
-                        Clothing
-                    </a>
-                </li>
-
-                <li class="promo__item promo__item--tools">
-                    <a class="promo__link" href="/lots/category/tools">
-                        Tools
-                    </a>
-                </li>
-
-                <li class="promo__item promo__item--other">
-                    <a class="promo__link" href="/lots/category/other">
-                        Other
-                    </a>
-                </li>
-
+                {% for category in categories %}
+                    <li class="promo__item promo__item--{{ category.name | lower }}">
+                        {% comment %} TODO: url 'category' category.name {% endcomment %}
+                        <a class="promo__link" href="{{ category.id }}">
+                            {{ category.name }}
+                        </a>
+                    </li>
+                {% endfor %}
             </ul>
         </section>
         <section class="lots">
-            <h1>For each active listing, this page should display (at minimum) the title, description, current price, and phot</h1>
-
             <div class="lots__header">
-                <h2>Open lots</h2>
+                <h2>Active Listings</h2>
             </div>
             <ul class="lots__list">
-
-                <li class="lot lots__item">
-                    <div class="lot__image">
-                        <a href="/lots/2">
-                            <img src="/img/lot-2.jpg" width="350" height="260" alt="DC Ply Mens 2016/2017 Snowboard">
-                        </a>
-                    </div>
-                    <div class="lot__info">
-                        <span class="lot__category">Boards</span>
-                        <h3 class="lot__title">
-                            <a class="text-link" href="/lots/2">
-                                DC Ply Mens 2016/2017 Snowboard
+                {% for listing in listings %}
+                    {% comment %} TODO: include card {% endcomment %}
+                    <li class="lot lots__item">
+                        <div class="lot__image">
+                            <a href="{% url 'listing' listing.id %}">
+                                <img src="{{ listing.image_url }}" width="350" height="260" alt="{{ listing.title }}">
                             </a>
-                        </h3>
-                        <div class="lot__state">
-                            <div class="lot__rate">
-                                <span class="lot__amount">Starting price</span>
-                                <span class="lot__cost">$1,59,999.00</span>
-                            </div>
-
-                            <div class="lot__timer timer  ">
-                                6096:09:41
+                        </div>
+                        <div class="lot__info">
+                            <span class="lot__category">{{ listing.category }}</span>
+                            <h3 class="lot__title">
+                                <a class="text-link" href="{% url 'listing' listing.id %}">
+                                    {{ listing.title }}
+                                </a>
+                            </h3>
+                            <div class="lot__state">
+                                <div class="lot__rate">
+                                    {% comment %} TODO: use current price {% endcomment %}
+                                    <span class="lot__amount">Price</span>
+                                    <span class="lot__cost">{{ listing.start_bid | usd}}</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </li>
-
-                <li class="lot lots__item">
-                    <div class="lot__image">
-                        <a href="/lots/1">
-                            <img src="/img/lot-1.jpg" width="350" height="260" alt="2014 Rossignol District Snowboard">
-                        </a>
-                    </div>
-                    <div class="lot__info">
-                        <span class="lot__category">Boards</span>
-                        <h3 class="lot__title">
-                            <a class="text-link" href="/lots/1">
-                                2014 Rossignol District Snowboard
-                            </a>
-                        </h3>
-                        <div class="lot__state">
-                            <div class="lot__rate">
-                                <span class="lot__amount">Starting price</span>
-                                <span class="lot__cost">$10,999.00</span>
-                            </div>
-
-                            <div class="lot__timer timer  ">
-                                6072:09:41
-                            </div>
-                        </div>
-                    </div>
-                </li>
-
-                <li class="lot lots__item">
-                    <div class="lot__image">
-                        <a href="/lots/3">
-                            <img src="/img/lot-3.jpg" width="350" height="260" alt="Union Contact Pro Bindings 2015 L/XL">
-                        </a>
-                    </div>
-                    <div class="lot__info">
-                        <span class="lot__category">Attachment</span>
-                        <h3 class="lot__title">
-                            <a class="text-link" href="/lots/3">
-                                Union Contact Pro Bindings 2015 L/XL
-                            </a>
-                        </h3>
-                        <div class="lot__state">
-                            <div class="lot__rate">
-                                <span class="lot__amount">Starting price</span>
-                                <span class="lot__cost">$8,000.00</span>
-                            </div>
-
-                            <div class="lot__timer timer  ">
-                                6192:09:41
-                            </div>
-                        </div>
-                    </div>
-                </li>
-
-                <li class="lot lots__item">
-                    <div class="lot__image">
-                        <a href="/lots/4">
-                            <img src="/img/lot-4.jpg" width="350" height="260" alt="DC Mutiny Charcoal Snowboard Boots">
-                        </a>
-                    </div>
-                    <div class="lot__info">
-                        <span class="lot__category">Boots</span>
-                        <h3 class="lot__title">
-                            <a class="text-link" href="/lots/4">
-                                DC Mutiny Charcoal Snowboard Boots
-                            </a>
-                        </h3>
-                        <div class="lot__state">
-                            <div class="lot__rate">
-                                <span class="lot__amount">Starting price</span>
-                                <span class="lot__cost">$10,999.00</span>
-                            </div>
-
-                            <div class="lot__timer timer  ">
-                                6144:09:41
-                            </div>
-                        </div>
-                    </div>
-                </li>
-
-                <li class="lot lots__item">
-                    <div class="lot__image">
-                        <a href="/lots/5">
-                            <img src="/img/lot-5.jpg" width="350" height="260" alt="DC Mutiny Charcoal Snowboard Jacket">
-                        </a>
-                    </div>
-                    <div class="lot__info">
-                        <span class="lot__category">Clothing</span>
-                        <h3 class="lot__title">
-                            <a class="text-link" href="/lots/5">
-                                DC Mutiny Charcoal Snowboard Jacket
-                            </a>
-                        </h3>
-                        <div class="lot__state">
-                            <div class="lot__rate">
-                                <span class="lot__amount">Starting price</span>
-                                <span class="lot__cost">$7,500.00</span>
-                            </div>
-
-                            <div class="lot__timer timer  ">
-                                6240:09:41
-                            </div>
-                        </div>
-                    </div>
-                </li>
-
-                <li class="lot lots__item">
-                    <div class="lot__image">
-                        <a href="/lots/6">
-                            <img src="/img/lot-6.jpg" width="350" height="260" alt="Oakley Canopy Goggles">
-                        </a>
-                    </div>
-                    <div class="lot__info">
-                        <span class="lot__category">Tools</span>
-                        <h3 class="lot__title">
-                            <a class="text-link" href="/lots/6">
-                                Oakley Canopy Goggles
-                            </a>
-                        </h3>
-                        <div class="lot__state">
-                            <div class="lot__rate">
-                                <span class="lot__amount">Starting price</span>
-                                <span class="lot__cost">$5,400.00</span>
-                            </div>
-
-                            <div class="lot__timer timer  ">
-                                6216:09:41
-                            </div>
-                        </div>
-                    </div>
-                </li>
+                    </li>
+                {% endfor %}
             </ul>
         </section>
     </main>

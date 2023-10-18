@@ -1,23 +1,33 @@
 from django.contrib.auth import authenticate, login, logout
-from django.db import IntegrityError
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from . forms import LoginForm, RegisteringForm
-from . models import User
+from .forms import LoginForm, RegisteringForm, CreateListingForm
+from .models import User, Listing
 
 
 def index(request):
-    return render(request, "auctions/index.html")
+    return render(request, "auctions/index.html", { "listings": Listing.objects.all() })
 
 
-def listing(request):
+def listing(request, id):
     return render(request, "auctions/listing.html")
 
 
 def create_listing(request):
-    return render(request, "auctions/create_listing.html")
+    if request.method == "POST":
+        form = CreateListingForm(request.POST)
+
+        if form.is_valid():
+            listing = form.save(commit=False)
+            listing.creator = request.user
+            listing.save()
+            return HttpResponseRedirect(reverse("index"))
+    else:
+        form = CreateListingForm()
+
+    return render(request, "auctions/create_listing.html", {"form": form})
 
 
 def watchlist(request):
@@ -73,14 +83,9 @@ def register(request):
                 })
 
             # Attempt to create new user
-            try:
-                user = User.objects.create_user(username, email, password)
-                user.save()
-            except IntegrityError:
-                return render(request, "auctions/register.html", {
-                    "form": form,
-                    "message": "Username already taken."
-                })
+            user = User.objects.create_user(username, email, password)
+            user.save()
+
             login(request, user)
             return HttpResponseRedirect(reverse("index"))
     else:

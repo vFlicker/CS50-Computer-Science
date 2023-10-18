@@ -2,55 +2,57 @@
 
 {% block body %}
     <main class="container">
-        <form action="" method="post" class="form form--lot">
+        <form action="" method="post" class="form form--lot {% if form.errors %}form__item--invalid{% endif %}">
             <h2>Create a new listing</h2>
 
+            {% csrf_token %}
+
             <div class="form__container">
                 <div class="form__item ">
-                    <label for="title">Name *</label>
-                    <input id="title" type="text" name="title" placeholder="Enter lot name" value="">
+                    <label for="{{ form.title.id_for_label }}">
+                        {{ form.title.label }}{% if form.title.field.required %}*{% endif %}
+                    </label>
+                    {{ form.title }}
+                    {{ form.title.errors }}
                 </div>
                 <div class="form__item ">
-                    <label for="category">Category *</label>
-                    <select id="category" name="category">
-                        <option>Boards</option>
-                        <option>Attachment</option>
-                        <option>Boots</option>
-                        <option>Clothing</option>
-                        <option>Tools</option>
-                        <option>Other</option>
-                    </select>
+                    <label for="{{ form.category.id_for_label }}">
+                        {{ form.category.label }}{% if form.category.field.required %}*{% endif %}
+                    </label>
+                    {{ form.category }}
+                    {{ form.category.errors }}
                 </div>
             </div>
             <div class="form__item ">
-                <label for="description">Description *</label>
-                <textarea id="description" name="description" placeholder="Write a description of the lot"></textarea>
-            </div>
-            <div class="form__item ">
-                <label for="image">Image *</label>
-                <div class="uploader">
-                    <input class="uploader__input" id="image" type="file" name="image" tabindex="-1">
-                    <button type="button" class="uploader__button">+</button>
-                    <img class="uploader__image" src="" width="113" height="113">
-                </div>
+                <label for="{{ form.description.id_for_label }}">
+                    {{ form.description.label }}{% if form.description.field.required %}*{% endif %}
+                </label>
+                {{ form.description }}
+                {{ form.description.errors }}
             </div>
             <div class="form__container">
                 <div class="form__item ">
-                    <label for="price">Starting price *</label>
-                    <input id="price" type="number" name="price" placeholder="0" value="0">
+                    <label for="{{ form.image_url.id_for_label }}">
+                        {{ form.image_url.label }}{% if form.image_url.field.required %}*{% endif %}
+                    </label>
+                    {{ form.image_url }}
+                    {{ form.image_url.errors }}
                 </div>
                 <div class="form__item ">
-                    <label for="step">Bet step *</label>
-                    <input id="step" type="number" name="step" placeholder="0" value="0">
-                </div>
-                <div class="form__item ">
-                    <label for="endDate">End date of auction *</label>
-                    <input id="endDate" type="text" name="endDate" placeholder="Please enter a date" value=""
-                        class="flatpickr-input" readonly="readonly">
+                    <label for="{{ form.start_bid.id_for_label }}">
+                        {{ form.start_bid.label }}{% if form.start_bid.field.required %}*{% endif %}
+                    </label>
+                    {{ form.start_bid }}
+                    {{ form.start_bid.errors }}
                 </div>
             </div>
 
-            <button type="submit" class="button">Add lot</button>
+            <button type="submit" class="button">Add listing</button>
+
+            {% if message %}
+                <p>{{ message }}</p>
+            {% endif %}
+
         </form>
     </main>
 {% endblock %}
