@@ -8,14 +8,14 @@
             {% csrf_token %}
 
             <div class="form__container">
-                <div class="form__item ">
+                <div class="form__item">
                     <label for="{{ form.title.id_for_label }}">
                         {{ form.title.label }}{% if form.title.field.required %}*{% endif %}
                     </label>
                     {{ form.title }}
                     {{ form.title.errors }}
                 </div>
-                <div class="form__item ">
+                <div class="form__item">
                     <label for="{{ form.category.id_for_label }}">
                         {{ form.category.label }}{% if form.category.field.required %}*{% endif %}
                     </label>
@@ -23,7 +23,7 @@
                     {{ form.category.errors }}
                 </div>
             </div>
-            <div class="form__item ">
+            <div class="form__item">
                 <label for="{{ form.description.id_for_label }}">
                     {{ form.description.label }}{% if form.description.field.required %}*{% endif %}
                 </label>
@@ -31,19 +31,19 @@
                 {{ form.description.errors }}
             </div>
             <div class="form__container">
-                <div class="form__item ">
+                <div class="form__item">
                     <label for="{{ form.image_url.id_for_label }}">
                         {{ form.image_url.label }}{% if form.image_url.field.required %}*{% endif %}
                     </label>
                     {{ form.image_url }}
                     {{ form.image_url.errors }}
                 </div>
-                <div class="form__item ">
-                    <label for="{{ form.start_bid.id_for_label }}">
-                        {{ form.start_bid.label }}{% if form.start_bid.field.required %}*{% endif %}
+                <div class="form__item">
+                    <label for="{{ form.starting_bid.id_for_label }}">
+                        {{ form.starting_bid.label }}{% if form.starting_bid.field.required%}*{% endif %}
                     </label>
-                    {{ form.start_bid }}
-                    {{ form.start_bid.errors }}
+                    {{ form.starting_bid }}
+                    {{ form.starting_bid.errors }}
                 </div>
             </div>
 
@@ -52,7 +52,6 @@
             {% if message %}
                 <p>{{ message }}</p>
             {% endif %}
-
         </form>
     </main>
 {% endblock %}

@@ -9,7 +9,7 @@
             <div class="lot-item__content">
                 <div class="lot-item__left">
                     <div class="lot-item__image">
-                        <img src="{{ listing.image_url }}" width="730" height="548" alt="{{ listing.title }}">
+                        <img src="{{ listing.image_url }}" width="730" height="548" alt="{{ listing.title }}" />
                     </div>
 
                     <div class="lot-item__footer">
@@ -18,17 +18,16 @@
                                 Category: <span>{{ listing.category }}</span>
                             </p>
                             {% if user.is_authenticated %}
-                                <a href="{% url 'toggle_watchlist' listing.id %}" class="bookmark-button {% if listing.in_watchlist %}bookmark-button--active{% endif %}">
-                                    <svg class="bookmark-button__icon" width="31" height="33">
-                                        <use xlink:href="#icon-bookmark"></use>
-                                    </svg>
-                                    <span class="visually-hidden">To bookmarks</span>
-                                </a>
+                            <a href="{% url 'toggle_watchlist' listing.id %}"
+                                class="bookmark-button {% if listing.in_watchlist %}bookmark-button--active{% endif %}">
+                                <svg class="bookmark-button__icon" width="31" height="33">
+                                    <use xlink:href="#icon-bookmark"></use>
+                                </svg>
+                                <span class="visually-hidden">To bookmarks</span>
+                            </a>
                             {% endif %}
                         </div>
-                        <p class="lot-item__description">
-                            {{ listing.description }}
-                        </p>
+                        <p class="lot-item__description">{{ listing.description }}</p>
                     </div>
                 </div>
 
@@ -38,26 +37,24 @@
                             <div class="lot-item__rate">
                                 <span class="lot-item__amount">Current price</span>
                                 {% comment %} TODO: use current price {% endcomment %}
-                                <span class="lot-item__cost">{{ listing.start_bid | usd}}</span>
+                                <span class="lot-item__cost">{{ listing.starting_bid | usd}}</span>
                             </div>
                         </div>
 
-                        <form action="/lots/2" method="post" class="bet__form ">
-                            <div class="bet__form-item ">
+                        <form action="/lots/2" method="post" class="bet__form">
+                            <div class="bet__form-item">
                                 <label for="cost">Your bet</label>
-                                <input id="lot_id" name="lotId" value="2" type="hidden">
-                                <input id="cost" class="input-cost" type="number" name="price" placeholder="160099">
+                                <input id="lot_id" name="lotId" value="2" type="hidden" />
+                                <input id="cost" class="input-cost" type="number" name="price" placeholder="160099" />
                                 <span class="form__error form__error--bet"></span>
                             </div>
                             <button type="submit" class="button">Make a bet</button>
                         </form>
                     </div>
 
-
                     <div class="history">
                         <h3>History of rates (<span>0</span>)</h3>
-                        <table class="history__list">
-                        </table>
+                        <table class="history__list"></table>
                     </div>
                 </div>
             </div>

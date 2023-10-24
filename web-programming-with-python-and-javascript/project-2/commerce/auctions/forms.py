@@ -33,10 +33,11 @@ class RegisteringForm(forms.ModelForm):
 class CreateListingForm(forms.ModelForm):
     class Meta:
         model = Listing
-        fields = ["title", "description", "start_bid", "image_url", "category"]
+        fields = ["title", "description",
+                  "starting_bid", "image_url", "category"]
         widgets = {
             "title": forms.TextInput(attrs={"placeholder": "Enter title"}),
             "description": forms.Textarea(attrs={"placeholder": "Enter description"}),
-            "start_bid": forms.TextInput(attrs={"placeholder": "Enter bid"}),
+            "starting_bid": forms.TextInput(attrs={"placeholder": "Enter bid"}),
             "image_url": forms.URLInput(attrs={"placeholder": "Enter image url"}),
         }
