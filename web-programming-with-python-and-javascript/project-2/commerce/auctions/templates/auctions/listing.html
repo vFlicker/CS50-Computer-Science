@@ -1,34 +1,44 @@
 {% extends "auctions/layout.html" %}
+{% load auctions_extras %}
 
 {% block body %}
     <main>
         <section class="lot-item container">
-            <h2>DC Ply Mens 2016/2017 Snowboard</h2>
+            <h2>{{ listing.title }}</h2>
+
             <div class="lot-item__content">
                 <div class="lot-item__left">
                     <div class="lot-item__image">
-                        <img src="/img/lot-2.jpg" width="730" height="548" alt="DC Ply Mens 2016/2017 Snowboard">
+                        <img src="{{ listing.image_url }}" width="730" height="548" alt="{{ listing.title }}">
                     </div>
-                    <p class="lot-item__category">
-                        Category: <span>Boards</span>
-                    </p>
-                    <p class="lot-item__description">
-                        The DC Ply Mens 2016/2017 Snowboard is a high-performance board that is designed for advanced
-                        riders. It has a true twin shape and a medium flex, making it suitable for freestyle riding in the
-                        park or on the mountain.
-                    </p>
+
+                    <div class="lot-item__footer">
+                        <div class="lot-item__footer-top">
+                            <p class="lot-item__category">
+                                Category: <span>{{ listing.category }}</span>
+                            </p>
+                            {% if user.is_authenticated %}
+                                <a href="{% url 'toggle_watchlist' listing.id %}" class="bookmark-button {% if listing.in_watchlist %}bookmark-button--active{% endif %}">
+                                    <svg class="bookmark-button__icon" width="31" height="33">
+                                        <use xlink:href="#icon-bookmark"></use>
+                                    </svg>
+                                    <span class="visually-hidden">To bookmarks</span>
+                                </a>
+                            {% endif %}
+                        </div>
+                        <p class="lot-item__description">
+                            {{ listing.description }}
+                        </p>
+                    </div>
                 </div>
 
                 <div class="lot-item__right">
                     <div class="bet">
-                        <div class="lot-item__timer timer">10:54:12</div>
                         <div class="lot-item__cost-state">
                             <div class="lot-item__rate">
                                 <span class="lot-item__amount">Current price</span>
-                                <span class="lot-item__cost">$1,59,999.00</span>
-                            </div>
-                            <div class="lot-item__min-cost">
-                                Minimum step –&nbsp;<span>$100.00</span>
+                                {% comment %} TODO: use current price {% endcomment %}
+                                <span class="lot-item__cost">{{ listing.start_bid | usd}}</span>
                             </div>
                         </div>
 
@@ -47,7 +57,6 @@
                     <div class="history">
                         <h3>History of rates (<span>0</span>)</h3>
                         <table class="history__list">
-
                         </table>
                     </div>
                 </div>

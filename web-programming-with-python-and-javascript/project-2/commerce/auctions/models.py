@@ -26,6 +26,15 @@ class Listing(models.Model):
         return self.title
 
 
+class Watchlist(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    item = models.ForeignKey(Listing, on_delete=models.CASCADE)
+    added_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Watchlist for user {self.user.username} with item {self.item.title}"
+
+
 class Bid(models.Model):
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
     binder = models.ForeignKey(User, on_delete=models.CASCADE)

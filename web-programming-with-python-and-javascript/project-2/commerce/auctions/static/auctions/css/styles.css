@@ -41,7 +41,6 @@
   font-display: swap;
 }
 
-
 /* Общее */
 html {
   box-sizing: border-box;
@@ -80,6 +79,21 @@ footer {
 
 a {
   text-decoration: none;
+}
+
+button {
+  padding: 0px;
+  background: 0px 0px;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-block;
+  font: inherit;
+  text-align: center;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  transition: color 0.3s ease 0s, background-color 0.3s ease 0s;
+  outline: 0px;
 }
 
 h2 {
@@ -157,6 +171,36 @@ h2 {
   background-color: #45abde;
   opacity: 0.2;
 }
+
+.bookmark-button {
+  flex-shrink: 0;
+  width: 18px;
+  height: 19px;
+}
+
+.bookmark-button .bookmark-button__icon,
+.bookmark-button .bookmark-button__icon {
+  stroke: #879296;
+  fill: #ffffff;
+}
+
+.bookmark-button:focus .bookmark-button__icon,
+.bookmark-button:hover .bookmark-button__icon {
+  stroke: #47b5ec;
+}
+
+.bookmark-button--active .bookmark-button__icon,
+.bookmark-button--active .bookmark-button__icon {
+  stroke: #2590c6;
+  fill: #2590c6;
+}
+
+.bookmark-button--active:hover .bookmark-button__icon,
+.bookmark-button--active:hover .bookmark-button__icon {
+  stroke: #47b5ec;
+  fill: #47b5ec;
+}
+
 
 .rub {
   display: inline-block;
@@ -281,7 +325,8 @@ h2 {
 }
 
 .user-menu__item a:hover {
-  background-color: #aeb7c21f;;
+  background-color: #aeb7c21f;
+  ;
 
 }
 
@@ -404,6 +449,7 @@ h2 {
   background-color: #e7f3ff;
   outline: none;
 }
+
 .main-footer {
   margin-top: 120px;
   background-color: #fff;
@@ -738,6 +784,12 @@ h2 {
   padding: 22px 30px 30px;
 }
 
+.lot__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .lot__category {
   font-size: 13px;
   color: #879296;
@@ -1037,12 +1089,12 @@ h2 {
   cursor: pointer;
 }
 
-.uploader__input:hover ~ .uploader__button,
-.uploader__input:focus ~ .uploader__button {
+.uploader__input:hover~.uploader__button,
+.uploader__input:focus~.uploader__button {
   background-color: #47b5ec;
 }
 
-.uploader__input:active ~ .uploader__button {
+.uploader__input:active~.uploader__button {
   background-color: #2590c6;
 }
 
@@ -1069,8 +1121,8 @@ h2 {
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .form__item--invalid input,
@@ -1115,6 +1167,12 @@ input::-webkit-inner-spin-button {
   margin-bottom: 34px;
 }
 
+.lot-item__footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
 .lot-item__image {
   position: relative;
   width: 730px;
@@ -1134,7 +1192,7 @@ input::-webkit-inner-spin-button {
 }
 
 .lot-item__category {
-  margin: 20px 0 12px;
+  margin: 0 0 12px;
   font-size: 13px;
 }
 

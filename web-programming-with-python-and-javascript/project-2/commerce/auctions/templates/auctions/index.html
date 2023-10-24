@@ -1,5 +1,4 @@
 {% extends "auctions/layout.html" %}
-{% load auctions_extras %}
 
 {% block body %}
     <main class="container">
@@ -24,29 +23,7 @@
             </div>
             <ul class="lots__list">
                 {% for listing in listings %}
-                    {% comment %} TODO: include card {% endcomment %}
-                    <li class="lot lots__item">
-                        <div class="lot__image">
-                            <a href="{% url 'listing' listing.id %}">
-                                <img src="{{ listing.image_url }}" width="350" height="260" alt="{{ listing.title }}">
-                            </a>
-                        </div>
-                        <div class="lot__info">
-                            <span class="lot__category">{{ listing.category }}</span>
-                            <h3 class="lot__title">
-                                <a class="text-link" href="{% url 'listing' listing.id %}">
-                                    {{ listing.title }}
-                                </a>
-                            </h3>
-                            <div class="lot__state">
-                                <div class="lot__rate">
-                                    {% comment %} TODO: use current price {% endcomment %}
-                                    <span class="lot__amount">Price</span>
-                                    <span class="lot__cost">{{ listing.start_bid | usd}}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
+                    {% include "auctions/card_item.html" %}
                 {% endfor %}
             </ul>
         </section>

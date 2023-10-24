@@ -1,18 +1,47 @@
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
+from django.db.models import Prefetch
+from django.contrib.auth.decorators import login_required
+
 
 from .forms import LoginForm, RegisteringForm, CreateListingForm
-from .models import User, Listing
+from .models import User, Listing, Watchlist
 
 
 def index(request):
-    return render(request, "auctions/index.html", { "listings": Listing.objects.all() })
+    # TODO: Має дозволити користувачам переглянути всі АКТИВНІ АУКЦІОНИ.
+
+    # Check if the user is authenticated (logged in)
+    if request.user.is_authenticated:
+        # If the user is logged in, get a list of all products and add the in_watchlist flag for each product
+        listings = Listing.objects.all().prefetch_related(
+            Prefetch(
+                'watchlist_set',
+                queryset=Watchlist.objects.filter(user=request.user),
+                to_attr='in_watchlist'
+            )
+        )
+    else:
+        # If the user is not logged in, simply get a list of all products without the in_watchlist flag
+        listings = Listing.objects.all()
+
+    return render(request, "auctions/index.html", {
+        "listings": listings,
+    })
 
 
-def listing(request, id):
-    return render(request, "auctions/listing.html")
+def listing(request, listing_id):
+    # TODO: Якщо користувач увійшов до облікового запису, він повинен мати можливість зробити ставку на товар. Ставка має бути не меншою за початкову ставку і більшою за будь-які інші ставки, що вже були розміщені (якщо такі існують). Якщо ставка не відповідає цим критеріям, користувач має отримати повідомлення про помилку.
+
+    # TODO: Якщо користувач увійшов до облікового запису і він є автором аукціону, він повинен мати змогу «закрити» аукціон на цій сторінці, що зробить автора найбільшої ставки переможцем аукціону, а сам аукціон стане неактивним.
+
+    # TODO: Якщо користувач увійшов до облікового запису на сторінці закритого аукціону і він є переможцем цього аукціону, він має отримати повідомлення про це.
+
+    # TODO: Користувачі, які увійшли до облікових записів, повинні мати можливість додавати коментарі на сторінці аукціону. Сторінка аукціону має відображати всі коментарі, які було зроблено щодо цього аукціону.
+
+    return render(request, "auctions/listing.html", {"listing": Listing.objects.get(pk=listing_id)})
 
 
 def create_listing(request):
@@ -30,8 +59,34 @@ def create_listing(request):
     return render(request, "auctions/create_listing.html", {"form": form})
 
 
+@login_required
 def watchlist(request):
-    return render(request, "auctions/watchlist.html")
+    # Get a list of all products that are in the tracking list for the current user
+    listings = Listing.objects.filter(
+        watchlist__user=request.user
+    ).prefetch_related(
+        Prefetch(
+            'watchlist_set',
+            queryset=Watchlist.objects.filter(user=request.user),
+            to_attr='in_watchlist'
+        )
+    )
+
+    return render(request, "auctions/watchlist.html", {
+        "listings": listings,
+    })
+
+
+@login_required
+def toggle_watchlist(request, listing_id):
+    item = get_object_or_404(Listing, pk=listing_id)
+    watchlist_item, created = Watchlist.objects.get_or_create(
+        user=request.user, item=item)
+
+    if not created:
+        watchlist_item.delete()
+
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 def login_view(request):
