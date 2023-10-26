@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Listing, User
+from .models import Listing, User, Bid
 
 
 class LoginForm(forms.Form):
@@ -30,7 +30,7 @@ class RegisteringForm(forms.ModelForm):
         }
 
 
-class CreateListingForm(forms.ModelForm):
+class ListingForm(forms.ModelForm):
     class Meta:
         model = Listing
         fields = ["title", "description",
@@ -40,4 +40,14 @@ class CreateListingForm(forms.ModelForm):
             "description": forms.Textarea(attrs={"placeholder": "Enter description"}),
             "starting_bid": forms.TextInput(attrs={"placeholder": "Enter bid"}),
             "image_url": forms.URLInput(attrs={"placeholder": "Enter image url"}),
+        }
+
+
+class BidForm(forms.ModelForm):
+    class Meta:
+        model = Bid
+        fields = ['bid_amount']
+
+        widgets = {
+            "bid_amount": forms.TextInput(attrs={"placeholder": "Enter your bid"}),
         }

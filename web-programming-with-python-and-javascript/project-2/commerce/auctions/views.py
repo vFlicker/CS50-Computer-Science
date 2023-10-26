@@ -4,10 +4,93 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.db.models import Prefetch
 from django.contrib.auth.decorators import login_required
+from django.views import View
 
 
-from .forms import LoginForm, RegisteringForm, CreateListingForm
-from .models import User, Listing, Watchlist
+from .forms import LoginForm, RegisteringForm, ListingForm, BidForm
+from .models import User, Bid, Listing, Watchlist
+
+
+class ListingView(View):
+    # TODO: Якщо користувач увійшов до облікового запису і він є автором аукціону, він повинен мати змогу «закрити» аукціон на цій сторінці, що зробить автора найбільшої ставки переможцем аукціону, а сам аукціон стане неактивним.
+
+    # TODO: Якщо користувач увійшов до облікового запису на сторінці закритого аукціону і він є переможцем цього аукціону, він має отримати повідомлення про це.
+
+    # TODO: Користувачі, які увійшли до облікових записів, повинні мати можливість додавати коментарі на сторінці аукціону. Сторінка аукціону має відображати всі коментарі, які було зроблено щодо цього аукціону.
+
+    template_name = "auctions/listing.html"
+    form_bid = BidForm
+
+    def get(self, request, listing_id):
+        listing = Listing.objects.get(pk=listing_id)
+        bids = Bid.objects.filter(listing=listing).order_by("-bid_time")[:10]
+        is_creator = request.user.is_authenticated and listing.creator == request.user
+
+        context = {
+            "listing": listing,
+            "form_bid": self.form_bid(),
+            "is_creator": is_creator,
+            "bids": bids
+        }
+
+        return render(request, "auctions/listing.html", context)
+
+    def post(self, request, listing_id):
+        listing = Listing.objects.get(pk=listing_id)
+        bids = Bid.objects.filter(listing=listing).order_by("-bid_time")[:10]
+        is_creator = request.user.is_authenticated and listing.creator == request.user
+        form_type = request.POST.get("form_type")
+
+        if form_type == "bid" and not is_creator:
+            form_bid = self.form_bid(request.POST)
+            if form_bid.is_valid():
+                bid = form_bid.save(commit=False)
+                bid.listing = listing
+                bid.bidder = request.user
+                if bid.bid_amount > listing.current_price:
+                    bid.save()
+                    listing.current_price = bid.bid_amount
+                    listing.save()
+                    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+                else:
+                    form_bid.add_error(
+                        'bid_amount', 'Bid must be greater than the current price.')
+        else:
+            form_bid = self.form_bid()
+
+        context = {
+            "listing": listing,
+            "form_bid": form_bid,
+            "is_creator": is_creator,
+            "bids": bids
+        }
+
+        return render(request, "auctions/listing.html", context)
+
+
+@login_required
+def bid(request, listing_id):
+    listing = Listing.objects.get(pk=listing_id)
+
+    if request.method == "POST":
+        form = BidForm(request.POST)
+
+        if form.is_valid():
+            bid = form.save(commit=False)
+            bid.listing = listing
+            bid.user = request.user
+            if bid.bid_amount > listing.current_price:
+                bid.save()
+                listing.current_price = bid.bid_amount
+                listing.save()
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+            else:
+                form.add_error(
+                    'bid_amount', 'Bid must be greater than the current price.')
+    else:
+        form = BidForm()
+
+    return render(request, "auctions/listing.html", {"listing": listing, "form": form})
 
 
 def index(request):
@@ -33,20 +116,17 @@ def index(request):
 
 
 def listing(request, listing_id):
-    # TODO: Якщо користувач увійшов до облікового запису, він повинен мати можливість зробити ставку на товар. Ставка має бути не меншою за початкову ставку і більшою за будь-які інші ставки, що вже були розміщені (якщо такі існують). Якщо ставка не відповідає цим критеріям, користувач має отримати повідомлення про помилку.
-
     # TODO: Якщо користувач увійшов до облікового запису і він є автором аукціону, він повинен мати змогу «закрити» аукціон на цій сторінці, що зробить автора найбільшої ставки переможцем аукціону, а сам аукціон стане неактивним.
 
     # TODO: Якщо користувач увійшов до облікового запису на сторінці закритого аукціону і він є переможцем цього аукціону, він має отримати повідомлення про це.
 
     # TODO: Користувачі, які увійшли до облікових записів, повинні мати можливість додавати коментарі на сторінці аукціону. Сторінка аукціону має відображати всі коментарі, які було зроблено щодо цього аукціону.
-
     return render(request, "auctions/listing.html", {"listing": Listing.objects.get(pk=listing_id)})
 
 
 def create_listing(request):
     if request.method == "POST":
-        form = CreateListingForm(request.POST)
+        form = ListingForm(request.POST)
 
         if form.is_valid():
             listing = form.save(commit=False)
@@ -54,7 +134,7 @@ def create_listing(request):
             listing.save()
             return HttpResponseRedirect(reverse("index"))
     else:
-        form = CreateListingForm()
+        form = ListingForm()
 
     return render(request, "auctions/create_listing.html", {"form": form})
 

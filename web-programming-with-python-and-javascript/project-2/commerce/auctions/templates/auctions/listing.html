@@ -41,20 +41,38 @@
                             </div>
                         </div>
 
-                        <form action="/lots/2" method="post" class="bet__form">
-                            <div class="bet__form-item">
-                                <label for="cost">Your bet</label>
-                                <input id="lot_id" name="lotId" value="2" type="hidden" />
-                                <input id="cost" class="input-cost" type="number" name="price" placeholder="160099" />
-                                <span class="form__error form__error--bet"></span>
-                            </div>
-                            <button type="submit" class="button">Make a bet</button>
-                        </form>
+                        {% if request.user.is_authenticated and not is_creator %}
+                            <form action="{% url 'listing' listing.id %}" method="post" class="bet__form">
+                                {% csrf_token %}
+
+                                <input type="hidden" name="form_type" value="bid">
+
+                                {% for field in form_bid %}
+                                    <div class="form__item">
+                                        <label for="{{ field.id_for_label }}">
+                                            {{ field.label }}{% if field.field.required %}*{% endif %}
+                                        </label>
+                                        {{ field }}
+                                        {{ field.errors }}
+                                    </div>
+                                {% endfor %}
+
+                                <button type="submit" class="button">Place bid</button>
+                            </form>
+                        {% endif %}
                     </div>
 
                     <div class="history">
                         <h3>History of rates (<span>0</span>)</h3>
-                        <table class="history__list"></table>
+                        <table class="history__list">
+                            {% for bid in bids %}
+                                <tr class="history__item">
+                                    <td class="history__name">{{ bid.bidder.username }}</td>
+                                    <td class="history__price">{{ bid.bid_amount | usd }}</td>
+                                    <td class="history__time">{{ bid.bid_time }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
                     </div>
                 </div>
             </div>
