@@ -10,6 +10,8 @@ from django.views import View
 from .forms import LoginForm, RegisteringForm, ListingForm, BidForm
 from .models import User, Bid, Listing, Watchlist
 
+# TODO: Категорії: Користувачі повинні мати змогу зайти на сторінку, що відображає список усіх категорій аукціонів. Натискання на назву категорії має переносити користувача на сторінку, що показує всі активні аукціони цієї категорії.
+
 
 class ListingView(View):
     # TODO: Якщо користувач увійшов до облікового запису і він є автором аукціону, він повинен мати змогу «закрити» аукціон на цій сторінці, що зробить автора найбільшої ставки переможцем аукціону, а сам аукціон стане неактивним.
@@ -25,6 +27,7 @@ class ListingView(View):
         listing = Listing.objects.get(pk=listing_id)
         bids = Bid.objects.filter(listing=listing).order_by("-bid_time")[:10]
         is_creator = request.user.is_authenticated and listing.creator == request.user
+        listing.in_watchlist = request.user.watchlist.filter(item=listing)
 
         context = {
             "listing": listing,
@@ -40,6 +43,7 @@ class ListingView(View):
         bids = Bid.objects.filter(listing=listing).order_by("-bid_time")[:10]
         is_creator = request.user.is_authenticated and listing.creator == request.user
         form_type = request.POST.get("form_type")
+        listing.in_watchlist = request.user.watchlist.filter(item=listing)
 
         if form_type == "bid" and not is_creator:
             form_bid = self.form_bid(request.POST)

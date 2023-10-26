@@ -1181,6 +1181,7 @@ input::-webkit-inner-spin-button {
     position: relative;
     width: 730px;
     height: 550px;
+    margin-bottom: 12px;
     text-align: center;
     background-color: #fff;
     overflow: hidden;
