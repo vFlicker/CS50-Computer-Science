@@ -8,9 +8,7 @@ from django.views import View
 
 
 from .forms import LoginForm, RegisteringForm, ListingForm, BidForm, CommentForm
-from .models import User, Bid, Listing, Watchlist, Comment
-
-# TODO: Категорії: Користувачі повинні мати змогу зайти на сторінку, що відображає список усіх категорій аукціонів. Натискання на назву категорії має переносити користувача на сторінку, що показує всі активні аукціони цієї категорії.
+from .models import User, Bid, Listing, Watchlist, Comment, Category
 
 
 class ListingView(View):
@@ -133,6 +131,16 @@ def index(request):
 
     return render(request, "auctions/index.html", {
         "listings": listings,
+    })
+
+
+def categories(request, category_id):
+    listings = Listing.objects.filter(category=category_id)
+    category = Category.objects.get(pk=category_id)
+
+    return render(request, "auctions/categories.html", {
+        "listings": listings,
+        "category": category,
     })
 
 

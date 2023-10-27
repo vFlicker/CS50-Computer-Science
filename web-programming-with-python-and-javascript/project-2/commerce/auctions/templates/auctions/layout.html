@@ -76,8 +76,7 @@
             <ul class="nav__list container">
                 {% for category in categories %}
                     <li class="nav__item">
-                        {% comment %} TODO: url 'category' category.name {% endcomment %}
-                        <a href="{{ category.id }}">
+                        <a href="{% url "categories" category.id %}">
                             {{ category.name }}
                         </a>
                     </li>
