@@ -11,7 +11,31 @@ from .forms import LoginForm, RegisteringForm, ListingForm, BidForm, CommentForm
 from .models import User, Bid, Listing, Watchlist, Comment, Category
 
 
+def index(request):
+    # TODO: Має дозволити користувачам переглянути всі АКТИВНІ АУКЦІОНИ.
+
+    # Check if the user is authenticated (logged in)
+    if request.user.is_authenticated:
+        # If the user is logged in, get a list of all products and add the in_watchlist flag for each product
+        listings = Listing.objects.all().prefetch_related(
+            Prefetch(
+                'watchlist_set',
+                queryset=Watchlist.objects.filter(user=request.user),
+                to_attr='in_watchlist'
+            )
+        )
+    else:
+        # If the user is not logged in, simply get a list of all products without the in_watchlist flag
+        listings = Listing.objects.all()
+
+    return render(request, "auctions/index.html", {
+        "listings": listings,
+    })
+
+
 class ListingView(View):
+    # TODO: Додати сторінку мої ставки
+
     # TODO: Якщо користувач увійшов до облікового запису і він є автором аукціону, він повинен мати змогу «закрити» аукціон на цій сторінці, що зробить автора найбільшої ставки переможцем аукціону, а сам аукціон стане неактивним.
 
     # TODO: Якщо користувач увійшов до облікового запису на сторінці закритого аукціону і він є переможцем цього аукціону, він має отримати повідомлення про це.
@@ -88,50 +112,8 @@ class ListingView(View):
 
 
 @login_required
-def bid(request, listing_id):
-    listing = Listing.objects.get(pk=listing_id)
-
-    if request.method == "POST":
-        form = BidForm(request.POST)
-
-        if form.is_valid():
-            bid = form.save(commit=False)
-            bid.listing = listing
-            bid.user = request.user
-            if bid.bid_amount > listing.current_price:
-                bid.save()
-                listing.current_price = bid.bid_amount
-                listing.save()
-                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-            else:
-                form.add_error(
-                    'bid_amount', 'Bid must be greater than the current price.')
-    else:
-        form = BidForm()
-
-    return render(request, "auctions/listing.html", {"listing": listing, "form": form})
-
-
-def index(request):
-    # TODO: Має дозволити користувачам переглянути всі АКТИВНІ АУКЦІОНИ.
-
-    # Check if the user is authenticated (logged in)
-    if request.user.is_authenticated:
-        # If the user is logged in, get a list of all products and add the in_watchlist flag for each product
-        listings = Listing.objects.all().prefetch_related(
-            Prefetch(
-                'watchlist_set',
-                queryset=Watchlist.objects.filter(user=request.user),
-                to_attr='in_watchlist'
-            )
-        )
-    else:
-        # If the user is not logged in, simply get a list of all products without the in_watchlist flag
-        listings = Listing.objects.all()
-
-    return render(request, "auctions/index.html", {
-        "listings": listings,
-    })
+def close_bid(listing_id):
+    pass
 
 
 def categories(request, category_id):

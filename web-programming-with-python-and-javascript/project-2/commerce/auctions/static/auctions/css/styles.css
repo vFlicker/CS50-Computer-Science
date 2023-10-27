@@ -1153,8 +1153,11 @@ input::-webkit-inner-spin-button {
     padding-top: 50px;
 }
 
-.lot-item h2 {
-    padding-bottom: 25px;
+.lot-item__header {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    margin-bottom: 25px;
 }
 
 .lot-item__content {
@@ -1246,6 +1249,7 @@ input::-webkit-inner-spin-button {
 }
 
 .lot-item__amount {
+    margin-bottom: 4px;
     font-size: 13px;
 }
 

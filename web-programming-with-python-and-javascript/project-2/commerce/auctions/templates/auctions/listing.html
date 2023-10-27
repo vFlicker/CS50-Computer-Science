@@ -4,7 +4,15 @@
 {% block body %}
     <main>
         <section class="lot-item container">
-            <h2>{{ listing.title }}</h2>
+            <div class="lot-item__header">
+                <h2>{{ listing.title }}</h2>
+
+                {% if user.is_authenticated %}
+                    <a href="{% url 'close_bid' listing.id %}" class="button">
+                        Close the bid
+                    </a>
+                {% endif %}
+            </div>
 
             <div class="lot-item__content">
                 <div class="lot-item__left">
@@ -66,9 +74,8 @@
                     <div class="bet">
                         <div class="lot-item__cost-state">
                             <div class="lot-item__rate">
-                                <span class="lot-item__amount">Current price</span>
-                                {% comment %} TODO: use current price {% endcomment %}
-                                <span class="lot-item__cost">{{ listing.starting_bid | usd}}</span>
+                                <div class="lot-item__amount">Current price</div>
+                                <div class="lot-item__cost">{{ listing.current_price | usd}}</div>
                             </div>
                         </div>
 
@@ -94,7 +101,7 @@
                     </div>
 
                     <div class="history">
-                        <h3>History of rates (<span>0</span>)</h3>
+                        <h3>History of rates (<span>{{ bids | length }}</span>)</h3>
                         <table class="history__list">
                             {% for bid in bids %}
                                 <tr class="history__item">

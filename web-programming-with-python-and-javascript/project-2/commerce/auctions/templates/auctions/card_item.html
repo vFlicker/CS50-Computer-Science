@@ -29,9 +29,8 @@
 
         <div class="lot__state">
             <div class="lot__rate">
-                {% comment %} TODO: use current price {% endcomment %}
                 <span class="lot__amount">Price</span>
-                <span class="lot__cost">{{ listing.starting_bid | usd}}</span>
+                <span class="lot__cost">{{ listing.current_price | usd}}</span>
             </div>
         </div>
     </div>
