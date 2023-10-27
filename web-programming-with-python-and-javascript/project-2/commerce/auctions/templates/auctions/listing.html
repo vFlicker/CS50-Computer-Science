@@ -8,16 +8,13 @@
 
             <div class="lot-item__content">
                 <div class="lot-item__left">
-                    <div class="lot-item__image">
-                        <img src="{{ listing.image_url }}" width="730" height="548" alt="{{ listing.title }}" />
-                    </div>
+                    <img src="{{ listing.image_url }}" class="lot-item__image" width="730" height="548" alt="{{ listing.title }}" />
 
-                    <div class="lot-item__footer">
-                        <div class="lot-item__footer-top">
-                            <p class="lot-item__category">
-                                Category: <span>{{ listing.category }}</span>
-                            </p>
-                            {% if user.is_authenticated %}
+                    <div class="lot-item__row">
+                        <p class="lot-item__category">
+                            Category: <span>{{ listing.category }}</span>
+                        </p>
+                        {% if user.is_authenticated %}
                             <a href="{% url 'toggle_watchlist' listing.id %}"
                                 class="bookmark-button {% if listing.in_watchlist %}bookmark-button--active{% endif %}">
                                 <svg class="bookmark-button__icon" width="31" height="33">
@@ -25,9 +22,43 @@
                                 </svg>
                                 <span class="visually-hidden">To bookmarks</span>
                             </a>
-                            {% endif %}
-                        </div>
-                        <p class="lot-item__description">{{ listing.description }}</p>
+                        {% endif %}
+                    </div>
+
+                    <p class="lot-item__description">{{ listing.description }}</p>
+
+                    <div class="lot-item__comments comments">
+                        <h2>Comments</h2>
+
+                        {% if user.is_authenticated and not is_creator %}
+                            <form action="{% url 'listing' listing.id %}" method="post" class="comments__form">
+                                {% csrf_token %}
+
+                                <input type="hidden" name="form_type" value="comment">
+
+                                {% for field in form_comment%}
+                                    <div class="form__item">
+                                        <label for="{{ field.id_for_label }}">
+                                            {{ field.label }}{% if field.field.required %}*{% endif %}
+                                        </label>
+                                        {{ field }}
+                                        {{ field.errors }}
+                                    </div>
+                                {% endfor %}
+
+                                <button type="submit" class="button">Add comment</button>
+                            </form>
+                        {% endif %}
+
+                        <ul class="comment__list">
+                            {% for comment in comments %}
+                                <li class="comment__item">
+                                    <div class="comment__sender">{{ comment.user.username }}</div>
+                                    <p class="comment__text">{{ comment.text }}<</p>
+                                    <time class="comment__time" datetime="{{ comment.created_at }}">{{ comment.created_at }}</time>
+                                </li>
+                            {% endfor %}
+                        </ul>
                     </div>
                 </div>
 
@@ -41,7 +72,7 @@
                             </div>
                         </div>
 
-                        {% if request.user.is_authenticated and not is_creator %}
+                        {% if user.is_authenticated and not is_creator %}
                             <form action="{% url 'listing' listing.id %}" method="post" class="bet__form">
                                 {% csrf_token %}
 

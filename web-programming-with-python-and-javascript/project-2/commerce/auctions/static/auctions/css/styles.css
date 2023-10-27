@@ -1171,29 +1171,18 @@ input::-webkit-inner-spin-button {
     margin-bottom: 34px;
 }
 
-.lot-item__footer-top {
+.lot-item__row {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
 }
 
 .lot-item__image {
-    position: relative;
     width: 730px;
     height: 550px;
     margin-bottom: 12px;
-    text-align: center;
     background-color: #fff;
-    overflow: hidden;
-}
-
-.lot-item__image img {
     object-fit: contain;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    display: block;
-    transform: translate(-50%, -50%);
 }
 
 .lot-item__category {
@@ -1206,8 +1195,36 @@ input::-webkit-inner-spin-button {
 }
 
 .lot-item__description {
-    margin: 0;
+    margin: 0 0 20px 0;
     font-weight: 400;
+}
+
+.comments__form {
+    margin-bottom: 20px;
+}
+
+.comment__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.comment__sender {
+    font-weight: 500;
+}
+
+.comment__text {
+    margin: 0;
+}
+
+.comment__time {
+    font-size: 14px;
+    line-height: 1;
+    color: rgb(93, 93, 93);
 }
 
 .bet {
@@ -1217,7 +1234,6 @@ input::-webkit-inner-spin-button {
 
 .lot-item__right .bet {
     margin-bottom: 20px;
-
 }
 
 .lot-item__timer {

@@ -7,8 +7,8 @@ from django.contrib.auth.decorators import login_required
 from django.views import View
 
 
-from .forms import LoginForm, RegisteringForm, ListingForm, BidForm
-from .models import User, Bid, Listing, Watchlist
+from .forms import LoginForm, RegisteringForm, ListingForm, BidForm, CommentForm
+from .models import User, Bid, Listing, Watchlist, Comment
 
 # TODO: Категорії: Користувачі повинні мати змогу зайти на сторінку, що відображає список усіх категорій аукціонів. Натискання на назву категорії має переносити користувача на сторінку, що показує всі активні аукціони цієї категорії.
 
@@ -18,22 +18,25 @@ class ListingView(View):
 
     # TODO: Якщо користувач увійшов до облікового запису на сторінці закритого аукціону і він є переможцем цього аукціону, він має отримати повідомлення про це.
 
-    # TODO: Користувачі, які увійшли до облікових записів, повинні мати можливість додавати коментарі на сторінці аукціону. Сторінка аукціону має відображати всі коментарі, які було зроблено щодо цього аукціону.
-
     template_name = "auctions/listing.html"
     form_bid = BidForm
+    form_comment = CommentForm
 
     def get(self, request, listing_id):
         listing = Listing.objects.get(pk=listing_id)
         bids = Bid.objects.filter(listing=listing).order_by("-bid_time")[:10]
         is_creator = request.user.is_authenticated and listing.creator == request.user
         listing.in_watchlist = request.user.watchlist.filter(item=listing)
+        comments = Comment.objects.filter(
+            listing=listing).order_by("-created_at")
 
         context = {
             "listing": listing,
             "form_bid": self.form_bid(),
+            "form_comment": self.form_comment(),
             "is_creator": is_creator,
-            "bids": bids
+            "bids": bids,
+            "comments": comments,
         }
 
         return render(request, "auctions/listing.html", context)
@@ -44,8 +47,19 @@ class ListingView(View):
         is_creator = request.user.is_authenticated and listing.creator == request.user
         form_type = request.POST.get("form_type")
         listing.in_watchlist = request.user.watchlist.filter(item=listing)
+        comments = Comment.objects.filter(
+            listing=listing).order_by("-created_at")
 
-        if form_type == "bid" and not is_creator:
+        if form_type == "comment" and not is_creator:
+            form_comment = self.form_comment(request.POST)
+            if form_comment.is_valid():
+                comment = form_comment.save(commit=False)
+                comment.listing = listing
+                comment.user = request.user
+                comment.save()
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+        elif form_type == "bid" and not is_creator:
             form_bid = self.form_bid(request.POST)
             if form_bid.is_valid():
                 bid = form_bid.save(commit=False)
@@ -61,12 +75,15 @@ class ListingView(View):
                         'bid_amount', 'Bid must be greater than the current price.')
         else:
             form_bid = self.form_bid()
+            form_comment = self.form_comment()
 
         context = {
             "listing": listing,
             "form_bid": form_bid,
+            "form_comment": form_comment,
             "is_creator": is_creator,
-            "bids": bids
+            "bids": bids,
+            "comments": comments,
         }
 
         return render(request, "auctions/listing.html", context)
@@ -117,15 +134,6 @@ def index(request):
     return render(request, "auctions/index.html", {
         "listings": listings,
     })
-
-
-def listing(request, listing_id):
-    # TODO: Якщо користувач увійшов до облікового запису і він є автором аукціону, він повинен мати змогу «закрити» аукціон на цій сторінці, що зробить автора найбільшої ставки переможцем аукціону, а сам аукціон стане неактивним.
-
-    # TODO: Якщо користувач увійшов до облікового запису на сторінці закритого аукціону і він є переможцем цього аукціону, він має отримати повідомлення про це.
-
-    # TODO: Користувачі, які увійшли до облікових записів, повинні мати можливість додавати коментарі на сторінці аукціону. Сторінка аукціону має відображати всі коментарі, які було зроблено щодо цього аукціону.
-    return render(request, "auctions/listing.html", {"listing": Listing.objects.get(pk=listing_id)})
 
 
 def create_listing(request):

@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Listing, User, Bid
+from .models import Listing, User, Bid, Comment
 
 
 class LoginForm(forms.Form):
@@ -50,4 +50,21 @@ class BidForm(forms.ModelForm):
 
         widgets = {
             "bid_amount": forms.TextInput(attrs={"placeholder": "Enter your bid"}),
+        }
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['text']
+
+        labels = {
+            "text": "Comment",
+        }
+
+        widgets = {
+            "text": forms.Textarea(attrs={
+                "placeholder": "Enter your comment",
+                "rows": 8,
+            }),
         }
