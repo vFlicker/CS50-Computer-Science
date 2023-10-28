@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "yeticave.accounts",
     "yeticave.auctions",
     'django.contrib.admin',
     'django.contrib.auth',
@@ -128,4 +129,4 @@ STATICFILES_DIRS = (
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = "auctions.User"
+AUTH_USER_MODEL = "accounts.User"
