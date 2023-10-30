@@ -2,7 +2,7 @@
 
 {% block content %}
     <main class="container">
-        <form action="{% url 'create_listing' %}" method="post"
+        <form action="{% url 'auctions:create_listing' %}" method="post"
             class="form form--lot {% if form.errors %}form__item--invalid{% endif %}">
             <h2>Create a new listing</h2>
 

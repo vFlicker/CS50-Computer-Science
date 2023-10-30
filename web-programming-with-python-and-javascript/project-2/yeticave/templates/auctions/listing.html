@@ -8,7 +8,7 @@
                 <h2>{{ listing.title }}</h2>
 
                 {% if user.is_authenticated %}
-                <a href="{% url 'close_bid' listing.id %}" class="button">
+                <a href="{% url 'auctions:close_bid' listing.id %}" class="button">
                     Close the bid
                 </a>
                 {% endif %}
@@ -24,7 +24,7 @@
                             Category: <span>{{ listing.category }}</span>
                         </p>
                         {% if user.is_authenticated %}
-                        <a href="{% url 'toggle_watchlist' listing.id %}"
+                        <a href="{% url 'auctions:toggle_watchlist' listing.id %}"
                             class="bookmark-button {% if listing.in_watchlist %}bookmark-button--active{% endif %}">
                             <svg class="bookmark-button__icon" width="31" height="33">
                                 <use xlink:href="#icon-bookmark"></use>
@@ -40,7 +40,7 @@
                         <h2>Comments</h2>
 
                         {% if user.is_authenticated and not is_creator %}
-                        <form action="{% url 'listing' listing.id %}" method="post" class="comments__form">
+                        <form action="{% url 'auctions:listing' listing.id %}" method="post" class="comments__form">
                             {% csrf_token %}
 
                             <input type="hidden" name="form_type" value="comment" />
@@ -80,7 +80,7 @@
                         </div>
 
                         {% if user.is_authenticated and not is_creator %}
-                        <form action="{% url 'listing' listing.id %}" method="post" class="bet__form">
+                        <form action="{% url 'auctions:listing' listing.id %}" method="post" class="bet__form">
                             {% csrf_token %}
 
                             <input type="hidden" name="form_type" value="bid" />

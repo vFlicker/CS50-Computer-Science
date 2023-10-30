@@ -65,7 +65,7 @@
             </form>
 
             {% if user.is_authenticated %}
-                <a class="main-header__add-lot button" href="{% url 'create_listing' %}">Create listing</a>
+                <a class="main-header__add-lot button" href="{% url 'auctions:create_listing' %}">Create listing</a>
 
                 <div class="user-menu__wrapper">
                     <button class="button__menu-open menu-open">
@@ -76,8 +76,8 @@
 
                     <nav class="user-menu user-menu--login">
                         <a class="user-menu__bets" href="/my-bets">My bets</a>
-                        <a class="user-menu__bets" href="{% url 'watchlist' %}">Watchlist</a>
-                        <a class="user-menu__logout" href="{% url 'logout' %}">Logout</a>
+                        <a class="user-menu__bets" href="{% url 'auctions:watchlist' %}">Watchlist</a>
+                        <a class="user-menu__logout" href="{% url 'accounts:logout' %}">Logout</a>
                     </nav>
                 </div>
             {% else %}
