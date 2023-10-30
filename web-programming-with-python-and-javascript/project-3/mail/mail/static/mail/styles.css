@@ -3,6 +3,18 @@ textarea {
     min-height: 400px;
 }
 
+h2 {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    width: 100%;
+}
+
+.form-group label div {
+    margin-bottom: 4px;
+}
+
 /* Email preview list */
 .email-preview-list {
     list-style: none;
@@ -29,9 +41,10 @@ textarea {
 }
 
 /* Email */
-.email {
+.email__content {
     padding: 10px;
     background-color: #e5e5e5;
+    margin-bottom: 10px;
 }
 
 .email__subject {
@@ -47,4 +60,14 @@ textarea {
 .email__sender span,
 .email__recipients span {
     font-weight: 500;
+}
+
+.compose-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.compose-form__submit {
+    align-self: flex-start;
 }

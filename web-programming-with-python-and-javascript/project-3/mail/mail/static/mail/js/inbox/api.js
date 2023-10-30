@@ -4,20 +4,43 @@ export const loadEmail = async (id) => {
     return email;
 };
 
+export const readEmail = async (id) => {
+    await fetch(`/emails/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify({
+            read: true,
+        })
+    });
+};
+
+export const archiveEmail = async (id) => {
+    await fetch(`/emails/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify({
+            archived: true,
+        })
+    });
+};
+
+export const unarchiveEmail = async (id) => {
+    await fetch(`/emails/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify({
+            archived: false,
+        })
+    });
+};
+
 export const loadEmails = async (mailbox) => {
     const response = await fetch(`/emails/${mailbox}`);
     const emails = await response.json();
     return emails;
 };
 
-export const sendEmail = async () => {
+export const sendEmail = async (body) => {
     await fetch('/emails', {
         method: 'POST',
-        body: JSON.stringify({
-            recipients: composeRecipients.value,
-            subject: composeSubject.value,
-            body: composeBody.value
-        })
+        body: JSON.stringify(body),
     });
 };
 

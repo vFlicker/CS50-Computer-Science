@@ -1,4 +1,5 @@
 import * as API from './api.js';
+import { Action, Screen } from './constants.js';
 import { createEmailPreviewListView, createEmailView } from './views.js';
 
 // Select all screens
@@ -30,33 +31,54 @@ const setActiveScreen = (name) => {
     }
 };
 
-const showComposeEmail = () => {
-    setActiveScreen('compose');
+const showComposeEmail = ({ recipients, subject, body } = {}) => {
+    setActiveScreen(Screen.COMPOSE);
 
-    // Clear out composition fields
-    composeRecipients.value = '';
-    composeSubject.value = '';
-    composeBody.value = '';
+    // Set data or clear fields
+    composeRecipients.value = recipients ?? '';
+    composeSubject.value = subject ?? '';
+    composeBody.value = body ?? '';
 };
 
-const showEmail = async (id) => {
-    setActiveScreen('email');
+const handleReplyClick = ({ sender, subject }) => {
+    showComposeEmail({ recipients: [sender], subject });
+};
+
+const handleEmailPreviewClick = async (id) => {
+    setActiveScreen(Screen.EMAIL);
 
     // Render email
     const email = await API.loadEmail(id);
-    const emailView = createEmailView(email);
+    const emailView = createEmailView(email, handleReplyClick);
     emailContainer.replaceChildren(emailView);
+
+    // Mark the email as read
+    API.readEmail(id);
+};
+
+const handleButtonClick = async (id, action) => {
+    switch (action) {
+        case Action.INBOX:
+            await API.archiveEmail(id);
+            showMailbox('Inbox', Action.INBOX);
+            break;
+        case Action.ARCHIVE:
+            await API.unarchiveEmail(id);
+            showMailbox('Inbox', Action.ARCHIVE);
+            break;
+    }
 };
 
 const showMailbox = async (title, action) => {
-    setActiveScreen('emails');
+    setActiveScreen(Screen.EMAILS);
 
     // Show the mailbox name
     emailScreenTitle.textContent = title;
 
     // Render email previews
     const emails = await API.loadEmails(action);
-    const emailPreviewListView = createEmailPreviewListView(emails, showEmail);
+
+    const emailPreviewListView = createEmailPreviewListView(emails, action, handleEmailPreviewClick, handleButtonClick);
     emailScreenList.replaceChildren(...emailPreviewListView);
 };
 
@@ -65,7 +87,7 @@ const onActionButtonClickHandler = (evt) => {
     const action = evt.target.dataset.action;
     const title = evt.target.textContent;
 
-    if (action === 'compose') {
+    if (action === Action.COMPOSE) {
         showComposeEmail();
     } else {
         showMailbox(title, action);
@@ -74,13 +96,19 @@ const onActionButtonClickHandler = (evt) => {
 
 const onFormSubmitHandler = async (evt) => {
     evt.preventDefault();
-    await API.sendEmail();
-    showMailbox('Sent', 'sent');
+
+    await API.sendEmail({
+        recipients: composeRecipients.value,
+        subject: composeSubject.value,
+        body: composeBody.value,
+    });
+
+    showMailbox('Sent', Action.SENT);
 };
 
 
 // By default, load the inbox
-showMailbox('Inbox', 'inbox');
+showMailbox('Inbox', Action.INBOX);
 
 // Use buttons to toggle between views
 for (const actionButton of actionButtons) {

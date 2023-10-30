@@ -26,18 +26,24 @@
 
     <div id="compose-view" data-screen="compose">
         <h3>New Email</h3>
-        <form id="compose-form">
+        <form id="compose-form" class="compose-form">
             <div class="form-group">
-                From: <input disabled class="form-control" value="{{ request.user.email }}">
+                <label>
+                    <div>From:</div>
+                    <input disabled class="form-control" value="{{ request.user.email }}">
+                </label>
             </div>
             <div class="form-group">
-                To: <input id="compose-recipients" class="form-control">
+                <label>
+                    <div>To:</div>
+                    <input id="compose-recipients" class="form-control">
+                </label>
             </div>
             <div class="form-group">
                 <input class="form-control" id="compose-subject" placeholder="Subject">
             </div>
             <textarea class="form-control" id="compose-body" placeholder="Body"></textarea>
-            <input type="submit" class="btn btn-primary"/>
+            <input type="submit" class="compose-form__submit btn btn-primary" />
         </form>
     </div>
 {% endblock %}
