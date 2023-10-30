@@ -1,13 +1,12 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from django.urls import reverse
-from django.db.models import Prefetch
 from django.contrib.auth.decorators import login_required
 from django.views import View
 
 
 from .forms import ListingForm, BidForm, CommentForm
-from .models import Bid, Listing, Watchlist, Comment, Category
+from .models import Bid, Listing, Comment, Category
 
 
 def index(request):
@@ -16,13 +15,7 @@ def index(request):
     # Check if the user is authenticated (logged in)
     if request.user.is_authenticated:
         # If the user is logged in, get a list of all products and add the in_watchlist flag for each product
-        listings = Listing.objects.all().prefetch_related(
-            Prefetch(
-                'watchlist_set',
-                queryset=Watchlist.objects.filter(user=request.user),
-                to_attr='in_watchlist'
-            )
-        )
+        listings = Listing.objects.all().with_in_watchlist()
     else:
         # If the user is not logged in, simply get a list of all products without the in_watchlist flag
         listings = Listing.objects.all()
@@ -133,38 +126,8 @@ def create_listing(request):
             listing = form.save(commit=False)
             listing.creator = request.user
             listing.save()
-            return HttpResponseRedirect(reverse("index"))
+            return HttpResponseRedirect(reverse("auctions:index"))
     else:
         form = ListingForm()
 
     return render(request, "auctions/create_listing.html", {"form": form})
-
-
-@login_required
-def watchlist(request):
-    # Get a list of all products that are in the tracking list for the current user
-    listings = Listing.objects.filter(
-        watchlist__user=request.user
-    ).prefetch_related(
-        Prefetch(
-            'watchlist_set',
-            queryset=Watchlist.objects.filter(user=request.user),
-            to_attr='in_watchlist'
-        )
-    )
-
-    return render(request, "auctions/watchlist.html", {
-        "listings": listings,
-    })
-
-
-@login_required
-def toggle_watchlist(request, listing_id):
-    item = get_object_or_404(Listing, pk=listing_id)
-    watchlist_item, created = Watchlist.objects.get_or_create(
-        user=request.user, item=item)
-
-    if not created:
-        watchlist_item.delete()
-
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

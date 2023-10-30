@@ -22,7 +22,7 @@
             </div>
             <ul class="lots__list">
                 {% for listing in listings %}
-                    {% include "auctions/card_item.html" %}
+                    {% include "auctions/_card_item.html" with listing_id=listing.id %}
                 {% endfor %}
             </ul>
         </section>

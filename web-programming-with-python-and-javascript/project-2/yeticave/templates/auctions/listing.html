@@ -24,13 +24,7 @@
                             Category: <span>{{ listing.category }}</span>
                         </p>
                         {% if user.is_authenticated %}
-                        <a href="{% url 'auctions:toggle_watchlist' listing.id %}"
-                            class="bookmark-button {% if listing.in_watchlist %}bookmark-button--active{% endif %}">
-                            <svg class="bookmark-button__icon" width="31" height="33">
-                                <use xlink:href="#icon-bookmark"></use>
-                            </svg>
-                            <span class="visually-hidden">To bookmarks</span>
-                        </a>
+                            {% include "watchlist/_toggle_watchlist.html" with listing_id=listing.id width="31" height="33" %}
                         {% endif %}
                     </div>
 

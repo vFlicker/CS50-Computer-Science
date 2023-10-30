@@ -6,7 +6,7 @@
             <h2>{{ category.name }}</h2>
             {% if listings %}
             <ul class="lots__list">
-                {% for listing in listings %} {% include "auctions/card_item.html" %} {%
+                {% for listing in listings %} {% include "auctions/_card_item.html" with listing_id=listing.id %} {%
         endfor %}
             </ul>
             {% else %}

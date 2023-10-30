@@ -18,6 +18,6 @@ def register(request: HttpRequest) -> HttpResponse:
     if (form := UserCreationForm(request.POST)).is_valid():
         user = form.save()
         auth_login(request, user)
-        return HttpResponseRedirect(reverse("index"))
+        return HttpResponseRedirect(reverse("auctions:index"))
 
     return render(request, "registration/register.html", {"form": form})
