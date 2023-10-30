@@ -4,6 +4,8 @@ from django.db.models import BooleanField, Case, When, Value
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 
+from yeticave.categories.models import Category
+
 User = get_user_model()
 
 
@@ -19,13 +21,6 @@ class ListingQuerySet(models.QuerySet):
 
 
 ListingManager = models.Manager.from_queryset(ListingQuerySet)
-
-
-class Category(models.Model):
-    name = models.CharField(max_length=64)
-
-    def __str__(self):
-        return self.name
 
 
 class Listing(models.Model):

@@ -8,5 +8,4 @@ urlpatterns = [
     path("listing/<int:listing_id>/", views.ListingView.as_view(), name="listing"),
     path("listing/<int:listing_id>/close_bid/", views.close_bid, name="close_bid"),
     path("create_listing/", views.create_listing, name="create_listing"),
-    path("categories/<int:category_id>/", views.categories, name="categories"),
 ]

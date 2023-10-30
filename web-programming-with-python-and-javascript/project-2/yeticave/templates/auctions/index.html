@@ -9,7 +9,7 @@
 
                 {% for category in categories %}
                     <li class="promo__item promo__item--{{ category.name | lower }}">
-                        <a class="promo__link" href="{% url "categories" category.id %}">
+                        <a class="promo__link" href="{% url "categories:category" category.id %}">
                             {{ category.name }}
                         </a>
                     </li>

@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     "yeticave.accounts",
     "yeticave.auctions",
+    "yeticave.categories",
     "yeticave.watchlist",
     'django.contrib.admin',
     'django.contrib.auth',
@@ -62,6 +63,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'yeticave.categories.context_processors.categories',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',

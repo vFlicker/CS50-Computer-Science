@@ -15,7 +15,7 @@ def index(request):
     # Check if the user is authenticated (logged in)
     if request.user.is_authenticated:
         # If the user is logged in, get a list of all products and add the in_watchlist flag for each product
-        listings = Listing.objects.all().with_in_watchlist()
+        listings = Listing.objects.all().with_in_watchlist(request.user)
     else:
         # If the user is not logged in, simply get a list of all products without the in_watchlist flag
         listings = Listing.objects.all()
@@ -106,16 +106,6 @@ class ListingView(View):
 @login_required
 def close_bid(listing_id):
     pass
-
-
-def categories(request, category_id):
-    listings = Listing.objects.filter(category=category_id)
-    category = Category.objects.get(pk=category_id)
-
-    return render(request, "auctions/categories.html", {
-        "listings": listings,
-        "category": category,
-    })
 
 
 def create_listing(request):
