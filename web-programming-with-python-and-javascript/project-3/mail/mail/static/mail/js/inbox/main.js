@@ -1,6 +1,7 @@
 import * as API from './api.js';
 import { Action, Screen } from './constants.js';
 import { createEmailPreviewListView, createEmailView } from './views.js';
+import { capitalizeFirstLetter } from './utils.js';
 
 // Select all screens
 const screens = document.querySelectorAll('[data-screen]');
@@ -83,15 +84,21 @@ const showMailbox = async (title, action) => {
 };
 
 
-const onActionButtonClickHandler = (evt) => {
-    const action = evt.target.dataset.action;
-    const title = evt.target.textContent;
+const applyAction = (action) => {
+    const title = capitalizeFirstLetter(action);
 
     if (action === Action.COMPOSE) {
         showComposeEmail();
     } else {
         showMailbox(title, action);
     }
+};
+
+const onActionButtonClickHandler = (evt) => {
+    const action = evt.target.dataset.action;
+
+    applyAction(action);
+    history.pushState({ screen: action}, "", action);
 };
 
 const onFormSubmitHandler = async (evt) => {
@@ -106,9 +113,13 @@ const onFormSubmitHandler = async (evt) => {
     showMailbox('Sent', Action.SENT);
 };
 
+const onStatePop = (evt) => {
+    applyAction(evt.state.screen);
+};
 
 // By default, load the inbox
 showMailbox('Inbox', Action.INBOX);
+history.pushState({ screen: Action.INBOX}, "", Action.INBOX);
 
 // Use buttons to toggle between views
 for (const actionButton of actionButtons) {
@@ -117,3 +128,6 @@ for (const actionButton of actionButtons) {
 
 // Add listener when submit form
 composeForm.addEventListener('submit', onFormSubmitHandler);
+
+// Add listener when user click back in browser
+window.addEventListener('popstate', onStatePop);
