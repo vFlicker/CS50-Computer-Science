@@ -8,16 +8,13 @@
                 <h2>{{ listing.title }}</h2>
 
                 {% if user.is_authenticated %}
-                <a href="{% url 'auctions:close_bid' listing.id %}" class="button">
-                    Close the bid
-                </a>
+                    {% include "auctions/_close_bid.html" %}
                 {% endif %}
             </div>
 
             <div class="lot-item__content">
                 <div class="lot-item__left">
-                    <img src="{{ listing.image_url }}" class="lot-item__image" width="730" height="548"
-                        alt="{{ listing.title }}" />
+                    <img src="{{ listing.image_url }}" class="lot-item__image" width="730" height="548" alt="{{ listing.title }}" />
 
                     <div class="lot-item__row">
                         <p class="lot-item__category">
@@ -34,31 +31,12 @@
                         <h2>Comments</h2>
 
                         {% if user.is_authenticated and not is_creator %}
-                        <form action="{% url 'auctions:listing' listing.id %}" method="post" class="comments__form">
-                            {% csrf_token %}
-
-                            <input type="hidden" name="form_type" value="comment" />
-
-                            {% for field in form_comment%}
-                            <div class="form__item">
-                                <label for="{{ field.id_for_label }}">
-                                    {{ field.label }}{% if field.field.required %}*{% endif %}
-                                </label>
-                                {{ field }} {{ field.errors }}
-                            </div>
-                            {% endfor %}
-
-                            <button type="submit" class="button">Add comment</button>
-                        </form>
+                            {% include "auctions/_add_comment.html" %}
                         {% endif %}
 
                         <ul class="comment__list">
                             {% for comment in comments %}
-                            <li class="comment__item">
-                                <div class="comment__sender">{{ comment.user.username }}</div>
-                                <p class="comment__text">{{ comment.text }}<</p> <time class="comment__time"
-                                        datetime="{{ comment.created_at }}">{{ comment.created_at }}</time>
-                            </li>
+                                {% include "auctions/_comment.html" %}
                             {% endfor %}
                         </ul>
                     </div>
@@ -74,22 +52,7 @@
                         </div>
 
                         {% if user.is_authenticated and not is_creator %}
-                        <form action="{% url 'auctions:listing' listing.id %}" method="post" class="bet__form">
-                            {% csrf_token %}
-
-                            <input type="hidden" name="form_type" value="bid" />
-
-                            {% for field in form_bid %}
-                            <div class="form__item">
-                                <label for="{{ field.id_for_label }}">
-                                    {{ field.label }}{% if field.field.required %}*{% endif %}
-                                </label>
-                                {{ field }} {{ field.errors }}
-                            </div>
-                            {% endfor %}
-
-                            <button type="submit" class="button">Place bid</button>
-                        </form>
+                            {% include "auctions/_add_bid.html" %}
                         {% endif %}
                     </div>
 
@@ -97,11 +60,7 @@
                         <h3>History of rates (<span>{{ bids | length }}</span>)</h3>
                         <table class="history__list">
                             {% for bid in bids %}
-                            <tr class="history__item">
-                                <td class="history__name">{{ bid.bidder.username }}</td>
-                                <td class="history__price">{{ bid.bid_amount | usd }}</td>
-                                <td class="history__time">{{ bid.bid_time }}</td>
-                            </tr>
+                                {% include "auctions/_bid.html" %}
                             {% endfor %}
                         </table>
                     </div>

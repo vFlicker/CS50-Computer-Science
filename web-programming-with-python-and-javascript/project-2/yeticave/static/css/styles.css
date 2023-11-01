@@ -104,6 +104,11 @@ h2 {
     font-weight: 700;
 }
 
+.row {
+    display: flex;
+    justify-content: space-between;
+}
+
 .text-link {
     font-weight: 700;
     color: #45abde;
@@ -174,8 +179,6 @@ h2 {
 
 .bookmark-button {
     flex-shrink: 0;
-    width: 18px;
-    height: 19px;
 }
 
 .bookmark-button .bookmark-button__icon,
@@ -1228,8 +1231,6 @@ input::-webkit-inner-spin-button {
 }
 
 .bet__form {
-    display: flex;
-    justify-content: space-between;
     margin-top: 17px;
 }
 
@@ -1528,4 +1529,8 @@ input::-webkit-inner-spin-button {
     align-items: center;
     justify-content: center;
     height: 100%;
+}
+
+.close-bid__form {
+    padding: 0;
 }

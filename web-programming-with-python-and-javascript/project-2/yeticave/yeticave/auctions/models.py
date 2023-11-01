@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib.auth import get_user_model, models
 from django.db import models
 from django.db.models import BooleanField, Case, When, Value
@@ -24,14 +26,17 @@ ListingManager = models.Manager.from_queryset(ListingQuerySet)
 
 
 class Listing(models.Model):
-    title = models.CharField(max_length=255)
-    description = models.TextField()
-    starting_bid = models.DecimalField(max_digits=10, decimal_places=2)
-    current_price = models.DecimalField(max_digits=10, decimal_places=2)
-    image_url = models.URLField()
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    creator = models.ForeignKey(User, on_delete=models.CASCADE)
-    is_active = models.BooleanField(default=True)
+    title: str = models.CharField(max_length=255)
+    description: str = models.TextField()
+    image_url: str = models.URLField()
+
+    starting_bid: float = models.DecimalField(max_digits=10, decimal_places=2)
+    current_price: float = models.DecimalField(max_digits=10, decimal_places=2)
+
+    is_active: bool = models.BooleanField(default=True)
+
+    category: Category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    creator: User = models.ForeignKey(User, on_delete=models.CASCADE)
 
     objects = ListingManager()
 
@@ -40,20 +45,24 @@ class Listing(models.Model):
 
 
 class Bid(models.Model):
-    listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
-    bidder = models.ForeignKey(User, on_delete=models.CASCADE)
-    bid_amount = models.DecimalField(max_digits=10, decimal_places=2)
-    bid_time = models.DateTimeField(auto_now_add=True)
+    bid_amount: float = models.DecimalField(max_digits=10, decimal_places=2)
+
+    bid_time: datetime = models.DateTimeField(auto_now_add=True)
+
+    listing: Listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
+    bidder: User = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"Bid on {self.listing.title} by {self.bidder.username}"
 
 
 class Comment(models.Model):
-    listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    text = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
+    text: str = models.TextField()
+
+    created_at: datetime = models.DateTimeField(auto_now_add=True)
+
+    listing: Listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
+    user: User = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"Comment on {self.listing.title} by {self.user.username}"

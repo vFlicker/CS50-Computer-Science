@@ -6,8 +6,7 @@ from .models import Listing, Bid, Comment
 class ListingForm(forms.ModelForm):
     class Meta:
         model = Listing
-        fields = ["title", "description",
-                  "starting_bid", "image_url", "category"]
+        fields = ["title", "description", "starting_bid", "image_url", "category"]
         widgets = {
             "title": forms.TextInput(attrs={"placeholder": "Enter title"}),
             "description": forms.Textarea(attrs={"placeholder": "Enter description"}),
@@ -20,7 +19,6 @@ class BidForm(forms.ModelForm):
     class Meta:
         model = Bid
         fields = ['bid_amount']
-
         widgets = {
             "bid_amount": forms.TextInput(attrs={"placeholder": "Enter your bid"}),
         }
@@ -30,11 +28,7 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['text']
-
-        labels = {
-            "text": "Comment",
-        }
-
+        labels = { "text": "Comment" }
         widgets = {
             "text": forms.Textarea(attrs={
                 "placeholder": "Enter your comment",
