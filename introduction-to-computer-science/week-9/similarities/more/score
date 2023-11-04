@@ -20,6 +20,7 @@ def main():
             file1 = file.read()
     except IOError:
         sys.exit(f"Could not read {args['FILE1']}")
+
     try:
         with open(args["FILE2"], "r") as file:
             file2 = file.read()

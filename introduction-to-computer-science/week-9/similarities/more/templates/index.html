@@ -1,7 +1,13 @@
 {% extends "layout.html" %}
 
 {% block body %}
-
-    <!-- TODO -->
-
+    <form action="/score" enctype="multipart/form-data" method="post">
+        <div class="form-group">
+            <input class="form-control mb-3" name="string1" placeholder="String" type="text">
+        </div>
+        <div class="form-group">
+            <input class="form-control mb-3" name="string2" placeholder="String" type="text">
+        </div>
+        <button class="btn btn-primary" type="submit">Score</button>
+    </form>
 {% endblock %}

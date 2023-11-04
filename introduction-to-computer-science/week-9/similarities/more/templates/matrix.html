@@ -1,44 +1,38 @@
 <table class="table table-sm">
     <thead>
-
         <tr>
             <th></th>
             <th></th>
             <th></th>
-            <th>h</th>
-            <th>e</th>
-            <th>y</th>
+            {% for character in s2 %}
+                <th>{{ character }}</th>
+            {% endfor %}
         </tr>
-
         <tr>
             <th></th>
             <th></th>
-            <th>0</th>
-            <th>1</th>
-            <th>2</th>
-            <th>3</th>
+            {% for cell in matrix[0] %}
+                <th>{{ loop.index0 }}</th>
+            {% endfor %}
         </tr>
-
     </thead>
     <tbody>
-
         <tr>
             <th></th>
             <th>0</th>
-            <td>0</td>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
+            {% for cost, _ in matrix[0] %}
+                <td>{{ cost }}</td>
+            {% endfor %}
         </tr>
 
-        <tr>
-            <th>h</th>
-            <th>1</th>
-            <td>1</td>
-            <td>0</td>
-            <td>1</td>
-            <td>2</td>
-        </tr>
-
+        {% for character in s1 %}
+            <tr>
+                <th>{{ character}}</th>
+                <th>{{ loop.index }}</th>
+                {% for cell, _ in matrix[loop.index] %}
+                    <td>{{ cell }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
     </tbody>
 </table>

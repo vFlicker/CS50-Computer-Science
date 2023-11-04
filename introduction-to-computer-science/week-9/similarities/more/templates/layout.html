@@ -17,12 +17,16 @@
     </head>
     <body>
 
-        <nav class="navbar fixed-top navbar-dark bg-dark">
-            <a class="navbar-brand" href="/">Similarities</a>
+        <nav class="navbar navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">Similarities</a>
+            </div>
         </nav>
 
         <div class="container-fluid">
-            {% block body %}{% endblock %}
+            <div class="row">
+                {% block body %}{% endblock %}
+            </div>
         </div>
 
         <!-- Optional JavaScript -->

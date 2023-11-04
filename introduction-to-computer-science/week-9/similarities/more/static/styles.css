@@ -5,38 +5,11 @@ html, body
     overflow: hidden;
 }
 
-/* Ensure content is below navbar */
-div.container-fluid
-{
-    padding-top: 56px;
-}
-
-/* remove padding within container */
-div.container-fluid
-{
-    padding-left: 0;
-    padding-right: 0;
-}
-
-/* Fill viewport */
-div.container-fluid, div.row, div.col, div.jumbotron
-{
-    height: 100%;
-}
-
-/* Split viewport */
-div.row
-{
-    height: 50%;
-    margin-left: 0;
-    margin-right: 0;
-    overflow: scroll;
-}
-
 /* Remove padding within column */
 div.col
 {
-    padding: 0;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 /* Add padding around form */
@@ -45,9 +18,18 @@ form
     padding: 15px;
 }
 
-/* Right-align leftmost column in matrix */
-div.row:first-of-type td:first-child,
-div.row:first-of-type th:first-child
+/* Wrap and scroll preformatted text */
+pre
+{
+    height: 100%;
+    overflow: auto;
+    padding: 15px;
+    white-space: pre-wrap;
+}
+
+/* right-align leftmost column in matrix */
+.matrix.row:first-of-type td:first-child,
+.matrix.row:first-of-type th:first-child
 {
     text-align: right;
 }
